@@ -17,5 +17,9 @@ import javax.persistence.Id;
 public class reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int idResrvation;
     private int idUser;
+    private int idEvenement;
+    private int nbrParticipants;
+    private String statusResrvation;
 }

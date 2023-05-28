@@ -17,5 +17,5 @@ import javax.persistence.Id;
 public class feedback {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idUser;
+    private int idFeedback;
 }

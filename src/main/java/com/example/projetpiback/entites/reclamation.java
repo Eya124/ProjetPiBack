@@ -17,5 +17,5 @@ import javax.persistence.Id;
 public class reclamation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idUser;
+    private int idReclamation;
 }
