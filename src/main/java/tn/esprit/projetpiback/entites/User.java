@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 
@@ -18,7 +19,7 @@ import java.util.Date;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idUser;
+    private Integer idUser;
 
     private String nom;
     private String prenom;
@@ -30,7 +31,7 @@ public class User {
     private String password;
     private String email;
     private String adresse;
-    private Date lastLog;
+    private LocalDate lastLog;
     private int nbrSignalement;
 
    // @JsonIgnore
