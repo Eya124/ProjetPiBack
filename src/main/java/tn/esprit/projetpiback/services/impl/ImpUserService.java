@@ -22,7 +22,7 @@ public class ImpUserService implements UserService {
 
 
 
-    @Scheduled(cron = "*/60 * * * * *")
+    @Scheduled(cron = "0 0 12 * * *")
     @Override
     public void sendEmail() {
         LocalDate date = LocalDate.now();
