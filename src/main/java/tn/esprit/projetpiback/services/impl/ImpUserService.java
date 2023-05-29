@@ -74,7 +74,23 @@ public class ImpUserService implements UserService {
     }
 
     @Override
-    public void findPartner(String name, String lastname) {
-        List<>
+    public List<User> findPartner(String name, String lastname) {
+        List<User> users=usersRepository.findAllByNomAndPrenom(name,lastname);
+        return users;
     }
+
+    @Override
+    public List<User> UserRegistredLastMonth(LocalDate date1, LocalDate date2) {
+        LocalDate d1 = LocalDate.now();
+        LocalDate d2 =d1.minusMonths(1);
+        List<User> users=usersRepository.findAllByFirstlogBetween(d2,d1);
+        return users;
+    }
+
+    @Override
+    public User getMostActiveUser() {
+        return null;
+    }
+
+
 }

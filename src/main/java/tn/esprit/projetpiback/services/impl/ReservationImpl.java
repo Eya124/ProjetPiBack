@@ -7,8 +7,6 @@ import tn.esprit.projetpiback.repository.ReservationRepository;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
-
 public class ReservationImpl {
     private final ReservationRepository reservationRepository;
 }

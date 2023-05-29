@@ -10,5 +10,6 @@ import java.util.List;
 public interface UsersRepository extends JpaRepository<User,Integer> {
     List<User> findAllByLastLog(LocalDate date);
     List<User> findAllByNomAndPrenom(String nom,String prenom);
+    List<User> findAllByFirstlogBetween(LocalDate d1 , LocalDate d2);
 
 }

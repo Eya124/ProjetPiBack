@@ -18,4 +18,5 @@ public class Like {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idLike;
+
 }
