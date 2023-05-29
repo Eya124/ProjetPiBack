@@ -1,4 +1,4 @@
-package com.example.projetpiback.entites;
+package tn.esprit.projetpiback.entites;
 
 
 import lombok.AllArgsConstructor;
@@ -15,7 +15,7 @@ import java.util.Date;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class user {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idUser;

@@ -1,4 +1,4 @@
-package com.example.projetpiback.entites;
+package tn.esprit.projetpiback.entites;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,8 +14,12 @@ import javax.persistence.Id;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class evenement {
+public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int idResrvation;
+    private int idUser;
     private int idEvenement;
+    private int nbrParticipants;
+    private String statusResrvation;
 }

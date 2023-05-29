@@ -1,4 +1,4 @@
-package com.example.projetpiback.entites;
+package tn.esprit.projetpiback.entites;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,8 +14,8 @@ import javax.persistence.Id;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class like {
+public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idLike;
+    private int idPost;
 }
