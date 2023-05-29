@@ -1,4 +1,5 @@
 package tn.esprit.projetpiback.entites;
+
 import lombok.*;
 
 import javax.persistence.Entity;
@@ -13,18 +14,12 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Post {
+public class Notification {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idPost;
+    private int id;
 
-    private String link_piecejointe;
-    private String link;
-    private String description;
-    private String adresse;
-    private LocalDate Date;
-    private int nbr_participant;
-    private String type_logement;
-    private String nbr_likes;
-    private int nbr_signalement;
+    private String content;
+
+    private LocalDate createdAt;
 }
