@@ -72,4 +72,9 @@ public class ImpUserService implements UserService {
         this.mailSender.send(simpleMailMessage);
 
     }
+
+    @Override
+    public void findPartner(String name, String lastname) {
+        List<>
+    }
 }
