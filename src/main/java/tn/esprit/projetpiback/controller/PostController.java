@@ -1,11 +1,10 @@
 package tn.esprit.projetpiback.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.projetpiback.entites.Commentaire;
 import tn.esprit.projetpiback.entites.Post;
-import tn.esprit.projetpiback.entites.Reply;
+import tn.esprit.projetpiback.services.PostService;
 import tn.esprit.projetpiback.services.impl.ImpNotificationService;
 import tn.esprit.projetpiback.services.impl.ImpPostService;
 
@@ -15,27 +14,27 @@ import java.util.List;
 @RequestMapping("post")
 @RequiredArgsConstructor
 public class PostController {
-    private final ImpPostService impPostService;
-    private final ImpNotificationService impNotificationService;
+    private final PostService postService;
+
     @GetMapping()
     public List<Post> getAllPost(){
-        return impPostService.getAllPost();
+        return postService.getAllPost();
     }
     @GetMapping("/{id}")
     public Post getByIdPost(@PathVariable int id){
-        return impPostService.getByIdPost(id);
+        return postService.getByIdPost(id);
     }
     @DeleteMapping("/{id}")
     private void deletePost(@PathVariable int id){
-        impPostService.deletePost(id);
+        postService.deletePost(id);
     }
     @PostMapping()
     public void ajouterPost(@RequestBody Post post){
-        impPostService.ajouterPost(post);
+        postService.ajouterPost(post);
     }
     @PutMapping()
     private Post updatePost(@RequestBody Post post){
-        impPostService.updatePost(post);
+        postService.updatePost(post);
         return post;
     }
     // Autre constructeur existant qui ne prend pas de paramètre
@@ -47,25 +46,25 @@ public class PostController {
     /*public PostController(ImpNotificationService impNotificationService) {
         this.impNotificationService = impNotificationService;
     }*/
-    @PostMapping("/posts")
-    public ResponseEntity<String> createPost(@RequestBody Post post) {
-        // Logique pour créer la publication
-
-        // Envoie d'une notification
-        impNotificationService.createNotification("Nouvelle publication créée");
-
-        return ResponseEntity.ok("Publication créée avec succès");
-    }
+//    @PostMapping("/posts")
+//    public ResponseEntity<Post> createPost(@RequestBody Post post) {
+//        // Logique pour créer la publication
+//
+//        // Envoie d'une notification
+//        impNotificationService.createNotification("Nouvelle publication créée");
+//
+//        return ResponseEntity.ok("Publication créée avec succès");
+//    }
 
     @PostMapping("/{postId}/comments")
     public String addCommentToPost(@PathVariable Integer postId, @RequestBody Commentaire commentaire) {
-        impPostService.addCommentToPost(postId, commentaire);
+        postService.addCommentToPost(postId, commentaire);
         return "Commentaire ajouté avec succès";
     }
 
     @PostMapping("/comments/{commentId}/replies")
-    public String addReplyToComment(@PathVariable Integer commentId, @RequestBody Reply reply) {
-        impPostService.addReplyToComment(commentId, reply);
+    public String addReplyToComment(@PathVariable Integer commentId, @RequestBody Commentaire reply) {
+        postService.addReplyToComment(commentId, reply);
         return "Réponse ajoutée avec succès";
     }
 }

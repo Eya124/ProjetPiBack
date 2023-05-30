@@ -1,6 +1,5 @@
 package tn.esprit.projetpiback.services.impl;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import tn.esprit.projetpiback.entites.*;
 import tn.esprit.projetpiback.repository.CommentaireRepository;
@@ -13,13 +12,19 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class ImpPostService implements PostService {
 
     private final PostRepository postRepository;
     private final CommentaireRepository commentaireRepository;
     private final UsersRepository usersRepository;
     private final NotificationRepository notificationRepository;
+
+    public ImpPostService(PostRepository postRepository, CommentaireRepository commentaireRepository, UsersRepository usersRepository, NotificationRepository notificationRepository) {
+        this.postRepository = postRepository;
+        this.commentaireRepository = commentaireRepository;
+        this.usersRepository = usersRepository;
+        this.notificationRepository = notificationRepository;
+    }
 
     @Override
     public void ajouterPost(Post p) {
@@ -87,17 +92,17 @@ public class ImpPostService implements PostService {
     }
 
     @Override
-    public void addReplyToComment(Integer idCommentaire, Reply reply) {
+    public void addReplyToComment(Integer idCommentaire, Commentaire reply) {
+        // Logique pour ajouter la réponse au commentaire
         Commentaire commentaire = commentaireRepository.findById(idCommentaire).orElse(null);
         if (commentaire != null) {
-            reply.setCommentaire(commentaire);
+            reply.setParentComment(commentaire);
             commentaire.getReplies().add(reply);
             commentaireRepository.save(commentaire);
         }
-        // Logique pour ajouter la réponse au commentaire
 
         // Création et association d'une notification pour les utilisateurs intéressés
-        Commentaire commentaireN = reply.getCommentaire();
+        //Commentaire commentaireN = reply.getCommentaire();
         List<User> usersInteresses = usersRepository.findUsersInteresses();
         for (User user : usersInteresses) {
             Notification notification = Notification.builder()
@@ -108,8 +113,8 @@ public class ImpPostService implements PostService {
                     .build();
 
             notification.setUser(user);
-            notificationRepository.save(notification);
             user.getNotifications().add(notification);
+            notificationRepository.save(notification);
         }
     }
 }

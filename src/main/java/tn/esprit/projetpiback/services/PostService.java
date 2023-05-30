@@ -2,7 +2,6 @@ package tn.esprit.projetpiback.services;
 
 import tn.esprit.projetpiback.entites.Commentaire;
 import tn.esprit.projetpiback.entites.Post;
-import tn.esprit.projetpiback.entites.Reply;
 
 import java.util.List;
 
@@ -13,5 +12,5 @@ public interface PostService {
     Post getByIdPost(Integer id);
     void deletePost(Integer id);
     void addCommentToPost(Integer idPost, Commentaire commentaire);
-    void addReplyToComment(Integer idCommentaire, Reply reply);
+    void addReplyToComment(Integer idCommentaire, Commentaire reply);
 }

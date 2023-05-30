@@ -4,14 +4,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
 import javax.persistence.*;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Locale;
 
 @Entity
 @Setter
@@ -29,7 +24,8 @@ public class Commentaire {
     @ManyToOne
     @JoinColumn(name = "post_id")
     private Post post;
-
-    @OneToMany(mappedBy = "commentaire", cascade = CascadeType.ALL)
-    private List<Reply> replies;
+    @ManyToOne
+    private Commentaire parentComment;
+    @OneToMany(mappedBy = "parentComment", cascade = CascadeType.ALL)
+    private List<Commentaire> replies;
 }
