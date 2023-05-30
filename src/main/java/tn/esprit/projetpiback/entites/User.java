@@ -43,4 +43,8 @@ public class User {
    // @JsonIgnore
   //  @OneToMany(mappedBy = "classe")
    // private List<coursClassroom> coursClassrooms;
+   @OneToMany
+   private List<Notification> notifications;
+
+    private boolean interesse;
 }
