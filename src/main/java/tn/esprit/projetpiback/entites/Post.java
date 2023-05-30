@@ -1,11 +1,9 @@
 package tn.esprit.projetpiback.entites;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Setter
@@ -27,4 +25,8 @@ public class Post {
     private String type_logement;
     private String nbr_likes;
     private int nbr_signalement;
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    private List<Commentaire> commentaires;
+
 }

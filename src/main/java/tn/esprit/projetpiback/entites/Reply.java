@@ -11,17 +11,16 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Notification {
+public class Reply {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private String content;
-    @Enumerated(EnumType.STRING)
-    private NotificationType type;
+
     private LocalDate createdAt;
 
     @ManyToOne
-    @JoinColumn(name = "idUser")
-    private User user;
+    @JoinColumn(name = "comment_id")
+    private Commentaire commentaire;
 }

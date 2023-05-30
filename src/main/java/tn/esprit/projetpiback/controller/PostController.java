@@ -3,7 +3,9 @@ package tn.esprit.projetpiback.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import tn.esprit.projetpiback.entites.Commentaire;
 import tn.esprit.projetpiback.entites.Post;
+import tn.esprit.projetpiback.entites.Reply;
 import tn.esprit.projetpiback.services.impl.ImpNotificationService;
 import tn.esprit.projetpiback.services.impl.ImpPostService;
 
@@ -53,5 +55,17 @@ public class PostController {
         impNotificationService.createNotification("Nouvelle publication créée");
 
         return ResponseEntity.ok("Publication créée avec succès");
+    }
+
+    @PostMapping("/{postId}/comments")
+    public String addCommentToPost(@PathVariable Integer postId, @RequestBody Commentaire commentaire) {
+        impPostService.addCommentToPost(postId, commentaire);
+        return "Commentaire ajouté avec succès";
+    }
+
+    @PostMapping("/comments/{commentId}/replies")
+    public String addReplyToComment(@PathVariable Integer commentId, @RequestBody Reply reply) {
+        impPostService.addReplyToComment(commentId, reply);
+        return "Réponse ajoutée avec succès";
     }
 }
