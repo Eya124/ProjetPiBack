@@ -1,4 +1,6 @@
 package tn.esprit.projetpiback.entites;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,9 +25,12 @@ public class Commentaire {
 
     @ManyToOne
     @JoinColumn(name = "post_id")
+    @JsonBackReference
     private Post post;
     @ManyToOne
+    @JsonBackReference
     private Commentaire parentComment;
     @OneToMany(mappedBy = "parentComment", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<Commentaire> replies;
 }
