@@ -16,15 +16,16 @@ import java.util.List;
 public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idResrvation;
+    private int idReservation;
 
     private int nbrParticipants;
-    private String statusResrvation;
+    private String statusReservation;
+
     // !!!!!!!!! Ayed 31/05/2023 <3 !!!!!!!!!
     @JsonIgnore
-    @OneToMany(mappedBy = "Reservation")
-    private List<User> users;
+    @ManyToMany(mappedBy = "reservations")
+    private List<Evenement> evenements;
 
     @ManyToOne
-    private Evenement evenement;
+    private User user;
 }
