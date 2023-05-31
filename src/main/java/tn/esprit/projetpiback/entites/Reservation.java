@@ -1,13 +1,12 @@
 package tn.esprit.projetpiback.entites;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Setter
@@ -17,9 +16,16 @@ import javax.persistence.Id;
 public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idResrvation;
-    private int idUser;
-    private int idEvenement;
+    private int idReservation;
+
     private int nbrParticipants;
-    private String statusResrvation;
+    private String statusReservation;
+
+    // !!!!!!!!! Ayed 31/05/2023 <3 !!!!!!!!!
+    @JsonIgnore
+    @ManyToMany(mappedBy = "reservations")
+    private List<Evenement> evenements;
+
+    @ManyToOne
+    private User user;
 }

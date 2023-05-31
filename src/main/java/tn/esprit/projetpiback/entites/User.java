@@ -36,6 +36,7 @@ public class User {
     private LocalDate firstlog;
     private LocalDate lastLog;
     private int nbrSignalement;
+    private boolean interesse;
     @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<Post> posts;
@@ -46,5 +47,10 @@ public class User {
    @OneToMany
    private List<Notification> notifications;
 
-    private boolean interesse;
+   // !!!!!!!!! Ayed 31/05/2023 <3 !!!!!!!!!
+    @JsonIgnore
+    @OneToMany(mappedBy = "user")
+    private List<Reservation> reservations;
+
+
 }
