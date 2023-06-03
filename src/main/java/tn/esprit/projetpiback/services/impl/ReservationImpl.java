@@ -26,4 +26,9 @@ public class ReservationImpl implements ReservationService {
         reservationRepository.deleteById(id);
 
     }
+    @Override
+    public int getNbrReservationUser(Integer idUser) {
+        return reservationRepository.countReservationsByUser_IdUser(idUser);
+    }
+
 }

@@ -27,4 +27,8 @@ public class ReservationController {
    void delete(@PathVariable int id){
        iAppService.delete(id);
    }
+    @GetMapping("/nbReservation/{idUser}")
+    public int nbReservationParUser(@PathVariable Integer idUser) {
+        return iAppService.getNbrReservationUser(idUser);
+    }
 }
