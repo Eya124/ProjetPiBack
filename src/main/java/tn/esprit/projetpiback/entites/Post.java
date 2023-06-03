@@ -1,5 +1,6 @@
 package tn.esprit.projetpiback.entites;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -27,8 +28,9 @@ public class Post {
     private String nbr_likes;
     private int nbr_signalement;
 
-    @JsonIgnore
+
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<Commentaire> commentaires;
 
     @ManyToOne
