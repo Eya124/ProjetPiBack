@@ -14,9 +14,9 @@ import tn.esprit.projetpiback.services.ReclamationService;
 public class ReclamationController {
     private final ReclamationService reclamationService;
 
-    @PostMapping("/post/{iduser1}/{iduser2}")
-    public void ajouterReclamation(@RequestBody Reclamation rec, @PathVariable int iduser1,@PathVariable int iduser2) {
-            reclamationService.ajouterReclamation(rec,iduser1,iduser2);
+    @PostMapping("/post/{iduserrec1}/{iduserarec2}")
+    public void ajouterReclamation(@RequestBody Reclamation rec, @PathVariable int iduserrec1,@PathVariable int iduserarec2) {
+            reclamationService.ajouterReclamation(rec,iduserrec1,iduserarec2);
     }
 
 

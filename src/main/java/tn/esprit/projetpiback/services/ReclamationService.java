@@ -9,7 +9,7 @@ import java.util.List;
 public interface ReclamationService {
 
 
-    void ajouterReclamation(Reclamation rec,int iduser1,int iduser2);
+    void ajouterReclamation(Reclamation rec,int iduserrec1,int iduserarec2);
 
     List<Reclamation> getAllReclamations();
 }
