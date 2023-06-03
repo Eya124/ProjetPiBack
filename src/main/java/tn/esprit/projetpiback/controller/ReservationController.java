@@ -12,10 +12,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ReservationController {
     private final ReservationService iAppService;
-   @PostMapping
-   public Reservation save(@RequestBody Reservation reservation){
-       return iAppService.addResrvation(reservation);
-   }
+  // @PostMapping
+  // public Reservation save(@RequestBody Reservation reservation){
+     //  return iAppService.addResrvation(reservation);
+  // }
 
 
     @GetMapping

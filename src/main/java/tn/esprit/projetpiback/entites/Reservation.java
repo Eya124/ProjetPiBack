@@ -23,7 +23,7 @@ public class Reservation {
 
     // !!!!!!!!! Ayed 31/05/2023 <3 !!!!!!!!!
     @JsonIgnore
-    @ManyToMany(mappedBy = "reservations")
+    @ManyToMany(mappedBy = "reservations",cascade = CascadeType.REMOVE)
     private List<Evenement> evenements;
 
     @ManyToOne

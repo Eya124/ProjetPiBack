@@ -16,7 +16,7 @@ import java.util.List;
 public class Evenement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idEvenement;
+    private Long idEvenement;
 
     @ManyToMany
     private List<Reservation> reservations;
