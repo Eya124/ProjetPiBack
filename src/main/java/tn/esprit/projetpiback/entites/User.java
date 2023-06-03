@@ -41,8 +41,11 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Post> posts;
 
+    @ManyToOne()
+    private Reclamation reclamation;
+
    // @JsonIgnore
-  //  @OneToMany(mappedBy = "classe")
+   //  @OneToMany(mappedBy = "classe")
    // private List<coursClassroom> coursClassrooms;
    @OneToMany
    private List<Notification> notifications;
