@@ -21,7 +21,8 @@ public class Evenement {
     private Date DateDebut;
     private Date DateFin;
 
-
+    @ManyToOne
+    private User usereve;
     @ManyToMany
     private List<Reservation> reservations;
 }
