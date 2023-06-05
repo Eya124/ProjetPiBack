@@ -17,9 +17,11 @@ import java.util.List;
 public class Evenement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idEvenement;
-    private Date DateDebut;
-    private Date DateFin;
+    private Integer idEvenement;
+    private Date dateDebut;
+    private Date dateFin;
+    private int nbrMaxParticipants;
+    private int nbrParticipants;
 
 
     @ManyToMany

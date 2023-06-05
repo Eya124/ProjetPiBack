@@ -12,8 +12,8 @@ import tn.esprit.projetpiback.services.EvenementService;
 public class EvenementController {
     @Autowired
     private EvenementService iEvenementService;
-    @PutMapping("/addAndAssign/{idEvenement}")
-    public Reservation addAndAssign(@RequestBody Reservation Reservation , @PathVariable("idEvenement") Long id){
-        return iEvenementService.addReservationAndAssignToEvenement(Reservation, id);
+    @PutMapping("/addAndAssign/{idUser}/{idEvenement}")
+    public Reservation addAndAssign( @PathVariable("idUser") Integer idUser , @PathVariable("idEvenement") Integer id){
+        return iEvenementService.addReservationAndAssignToEvenement(idUser, id);
     }
 }
