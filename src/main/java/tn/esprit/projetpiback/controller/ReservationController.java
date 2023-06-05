@@ -29,7 +29,7 @@ public class ReservationController {
        iAppService.delete(id);
    }*/
     @GetMapping("/nbReservation/{idEvenement}")
-    public int nbReservationParUser(@PathVariable Integer idEvenement) {
+    public int nbReservationParUser(@PathVariable Long idEvenement) {
         return iAppService.getNbrReservationActifEvenement(idEvenement, false);
     }
 }

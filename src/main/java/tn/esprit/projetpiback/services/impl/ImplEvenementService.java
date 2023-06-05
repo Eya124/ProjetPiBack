@@ -21,7 +21,7 @@ public class ImplEvenementService implements EvenementService {
     private final UsersRepository UsersRepository;
     private final ReservationRepository ReservationRepository;
     @Override
-    public void insertEvenementWithNbrParticipants(Integer idEvenement) {
+    public void insertEvenementWithNbrParticipants(Long idEvenement) {
         Evenement evenement = EvenementRepository.findById(idEvenement).orElseThrow(() -> new IllegalArgumentException("Evenement not found"));
         int nbr = ReservationRepository.countReservationsByEvenements_IdEvenementAndActif(idEvenement, false);
         evenement.setNbrParticipants(nbr);
@@ -29,7 +29,7 @@ public class ImplEvenementService implements EvenementService {
     }
     @Override
     @Transactional
-    public Reservation addReservationAndAssignToEvenement(Integer idUser, Integer idEvenement) {
+    public Reservation addReservationAndAssignToEvenement(Integer idUser, Long idEvenement) {
 
         Reservation reservation1 = Reservation.builder()
                 //.user()

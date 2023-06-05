@@ -20,17 +20,13 @@ public class ReservationImpl implements ReservationService {
         return reservationRepository.findAllByActif(false);
     }
 
-  /*  @Override
-    public void delete(int id) {
-        reservationRepository.deleteById(id);
 
-    }*/
   @Override
   public void insertEvenementWithNbrParticipants(Integer reservationId) {
       Reservation reservation = reservationRepository.findById(reservationId).orElseThrow(() -> new IllegalArgumentException("Reservation not found"));
       List<Evenement> evenements =  reservation.getEvenements();
       for (Evenement evenement : evenements) {
-            Integer evenementId  =evenement.getIdEvenement();
+          Long evenementId  =evenement.getIdEvenement();
           int nbr = reservationRepository.countReservationsByEvenements_IdEvenementAndActif(evenementId , false);
           evenement.setNbrParticipants(nbr);
           evenementRepository.save(evenement);
@@ -38,7 +34,7 @@ public class ReservationImpl implements ReservationService {
       }
   }
     @Override
-    public int getNbrReservationActifEvenement(Integer idEvenement, boolean actif) {
+    public int getNbrReservationActifEvenement(Long idEvenement, boolean actif) {
         return reservationRepository.countReservationsByEvenements_IdEvenementAndActif(idEvenement, actif);
     }
     @Override

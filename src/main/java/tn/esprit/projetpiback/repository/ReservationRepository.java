@@ -14,7 +14,7 @@ import java.util.List;
 @Repository
 public interface ReservationRepository extends JpaRepository<Reservation, Integer> {
     List<Reservation> findAllByActif(boolean actif);
-    int countReservationsByEvenements_IdEvenementAndActif (Integer idEvenement, boolean actif);
+    int countReservationsByEvenements_IdEvenementAndActif (Long idEvenement, boolean actif);
     List<Reservation> findReservationsByUserIdUserAndEvenementsDateDebutBetween (Integer idUser, Date dateDebut, Date dateFin);
 
     int countReservationsByUser_IdUser (Integer idUser);

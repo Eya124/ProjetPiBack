@@ -13,7 +13,7 @@ public class EvenementController {
     @Autowired
     private EvenementService iEvenementService;
     @PutMapping("/addAndAssign/{idUser}/{idEvenement}")
-    public Reservation addAndAssign( @PathVariable("idUser") Integer idUser , @PathVariable("idEvenement") Integer id){
+    public Reservation addAndAssign( @PathVariable("idUser") Integer idUser , @PathVariable("idEvenement") Long id){
         return iEvenementService.addReservationAndAssignToEvenement(idUser, id);
     }
 }
