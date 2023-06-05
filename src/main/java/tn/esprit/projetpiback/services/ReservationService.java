@@ -21,4 +21,7 @@ public interface ReservationService {
 
 
     void insertReservationWithActif(Integer reservationId);
+    void delete(int id);
+    int getNbrReservationUser(Integer idUser);
+
 }

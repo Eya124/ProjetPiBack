@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ReclamationRepository extends JpaRepository<Reclamation, Integer> {
+
+
 }

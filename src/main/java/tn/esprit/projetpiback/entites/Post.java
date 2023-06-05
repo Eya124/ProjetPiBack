@@ -34,5 +34,5 @@ public class Post {
     private List<Commentaire> commentaires;
 
     @ManyToOne
-    User user;
+    User userpost;
 }

@@ -38,11 +38,17 @@ public class User {
     private int nbrSignalement;
     private boolean interesse;
     @JsonIgnore
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "userpost")
     private List<Post> posts;
 
+    @ManyToOne()
+    private Reclamation reclamation;
+
+    @OneToMany(mappedBy = "usereve")
+    private List<Evenement> evenements;
+
    // @JsonIgnore
-  //  @OneToMany(mappedBy = "classe")
+   //  @OneToMany(mappedBy = "classe")
    // private List<coursClassroom> coursClassrooms;
    @OneToMany
    private List<Notification> notifications;

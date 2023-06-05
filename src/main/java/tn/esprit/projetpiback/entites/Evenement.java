@@ -23,7 +23,8 @@ public class Evenement {
     private int nbrMaxParticipants;
     private int nbrParticipants;
 
-
+    @ManyToOne
+    private User usereve;
     @ManyToMany
     private List<Reservation> reservations;
 }
