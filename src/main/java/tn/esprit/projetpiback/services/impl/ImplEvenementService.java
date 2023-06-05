@@ -41,8 +41,17 @@ public class ImplEvenementService implements EvenementService {
         Assert.notNull(user, "id not found");
         reservation1.setUser(user);
         ReservationRepository.saveAndFlush(reservation1);
-        List<Reservation> reservations =ReservationRepository.findReservationsByUserIdUserAndEvenementsDateDebutBetween(idUser, evenement.getDateDebut(), evenement.getDateFin());
+      /*  List<Reservation> reservations =ReservationRepository.findReservationsByUserIdUserAndEvenementsDateDebutBetween(idUser, evenement.getDateDebut(), evenement.getDateFin());
         if(!reservations.isEmpty()){
+            // Une réservation existe déjà, donc modifier uniquement le champ 'actif' à 'false'
+            Reservation existingReservation = reservations.get(0);
+            existingReservation.setActif(false);
+            ReservationRepository.save(existingReservation);
+            return existingReservation;
+
+        }*/
+        List<Reservation> reservationsActif =ReservationRepository.findReservationsByUserIdUserAndEvenementsDateDebutBetweenAndActif(idUser, evenement.getDateDebut(), evenement.getDateFin(), false);
+        if(!reservationsActif.isEmpty()){
             throw new RuntimeException("Une réservation existe déjà pour cet utilisateur et cet événement à la même date:"+evenement.getDateDebut());
         }
         if(evenement.getNbrMaxParticipants() <= evenement.getNbrParticipants()){

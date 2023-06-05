@@ -16,8 +16,10 @@ public interface ReservationRepository extends JpaRepository<Reservation, Intege
     List<Reservation> findAllByActif(boolean actif);
     int countReservationsByEvenements_IdEvenementAndActif (Long idEvenement, boolean actif);
     List<Reservation> findReservationsByUserIdUserAndEvenementsDateDebutBetween (Integer idUser, Date dateDebut, Date dateFin);
+    List<Reservation> findReservationsByUserIdUserAndEvenementsDateDebutBetweenAndActif (Integer idUser, Date dateDebut, Date dateFin, boolean actif);
 
     int countReservationsByUser_IdUser (Integer idUser);
 
-    List<Reservation> findAllByUserIdUserAndEvenementDateDebutBefore(int iduserrec,Date date);
+    //sl7ha ayed kent hka "findAllByUserIdUserAndEvenementDateDebutBefore"
+    List<Reservation> findReservationsByUserIdUserAndEvenementsDateDebutBefore(int iduserrec,Date date);
 }

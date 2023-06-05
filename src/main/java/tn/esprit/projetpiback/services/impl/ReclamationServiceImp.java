@@ -28,7 +28,7 @@ public class ReclamationServiceImp implements ReclamationService {
     public void ajouterReclamation(Reclamation rec,int iduserrec1,int iduserarec2) {
         //condition 1 : check whether the user that is going to send a claim is registred in an event
                 // get all id evenement of the user
-        List<Reservation> reservs = reservationRepository.findAllByUserIdUserAndEvenementDateDebutBefore(iduserrec1,new Date());
+        List<Reservation> reservs = reservationRepository.findReservationsByUserIdUserAndEvenementsDateDebutBefore(iduserrec1,new Date());
         List<Long> idevens=new ArrayList<>();
         for(Reservation x:reservs) {
             for(Evenement e: x.getEvenements()) {
@@ -37,7 +37,7 @@ public class ReclamationServiceImp implements ReclamationService {
         }
         // condition 2: check that the one who's bein claimed is the one that posted the even
                 // get alll even that has been posted by that user
-        List<Evenement> evens2 = evenementRepository.findAllUserIdUser(iduserarec2);
+        List<Evenement> evens2 = evenementRepository.findByUsereveIdUser (iduserarec2);
         List<Long> ideven2 = new ArrayList<>();
         for(Evenement evenement:evens2){
             ideven2.add(evenement.getIdEvenement());
