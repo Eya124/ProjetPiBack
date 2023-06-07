@@ -37,7 +37,7 @@ public class ReclamationServiceImp implements ReclamationService {
         }
         // condition 2: check that the one who's bein claimed is the one that posted the even
                 // get alll even that has been posted by that user
-        List<Evenement> evens2 = evenementRepository.findByUsereveIdUser (iduserarec2);
+        List<Evenement> evens2 = evenementRepository.findAllByUsereveIdUser(iduserarec2);
         List<Long> ideven2 = new ArrayList<>();
         for(Evenement evenement:evens2){
             ideven2.add(evenement.getIdEvenement());

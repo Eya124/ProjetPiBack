@@ -41,7 +41,7 @@ public class ImpUserService implements UserService {
             message=message+"Hello "+ u.getNom()+ ",\n" +
                     "\n" +
                     "We hope this email finds you well. "+"\n"+" We wanted to inform you that it has been 15 days since your last visit to BEST CAMP. We wanted to reach out and let you know that we miss you!";
-            sendEmailParametre(u.getEmail(),subject,message);
+            sendEmailParametre(u.getUsername(),subject,message);
 
 
             }
@@ -50,7 +50,7 @@ public class ImpUserService implements UserService {
             message=message+"Hello "+ u.getNom()+ ",\n" +
                     "\n" +
                     "We hope this email finds you well. "+"\n"+" We wanted to inform you that it has been 30 days since your last visit to BEST CAMP. We wanted to reach out and let you know that we miss you!"+"\n"+"Your account will be removed on "+d4;
-            sendEmailParametre(u.getEmail(),subject,message);
+            sendEmailParametre(u.getUsername(),subject,message);
 
 
         }
