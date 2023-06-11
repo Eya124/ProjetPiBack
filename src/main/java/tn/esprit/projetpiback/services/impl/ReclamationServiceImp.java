@@ -37,7 +37,8 @@ public class ReclamationServiceImp implements ReclamationService {
         Assert.notNull(userareclame,"User doesn't exist");
         Assert.notNull(userreclame,"User doesn't exist");
 
-        //condition 1 : check whether the user that is going to send a claim is registred in an event
+
+        //condition  : check whether the user that is going to send a claim is registred in an event
                 // get all id evenement of the user
         List<Reservation> reservs = reservationRepository.findReservationsByUserIdUserAndEvenementsDateDebutBefore(iduserrec1,new Date());
         List<Long> idevens=new ArrayList<>();
@@ -46,24 +47,35 @@ public class ReclamationServiceImp implements ReclamationService {
                 idevens.add(e.getIdEvenement());
             }
         }
-        // condition 2: check that the one who's bein claimed is the one that posted the even
+        // condition: check that the one who's bein claimed is the one that posted the even
                 // get alll even that has been posted by that user
         List<Evenement> evens2 = evenementRepository.findAllByUsereveIdUser(iduserarec2);
         List<Long> ideven2 = new ArrayList<>();
         for(Evenement evenement:evens2){
             ideven2.add(evenement.getIdEvenement());
         }
-        System.out.println(idevens);
-        System.out.println(ideven2);
+    //    System.out.println(idevens);
+     //   System.out.println(ideven2);
     //    Assert.notNull(idevens,"No reservation found ");
      //   Assert.notNull(ideven2,"This User didn't post any events");
         // compare the 2 lists
         if (Collections.disjoint(idevens,ideven2)) {
             System.out.println("you cannot send a claim to this person");
         } else {
-            rec.setUserrec(userreclame);
-            rec.setUserarec(userareclame);
-            reclamationRepository.save(rec);
+            //condition 1: check if the user already send a claim to the same user or not
+            List<User> usersReclameByUser = usersRepository.findAllByReclamationsUserarec(userareclame);
+
+            if (!usersReclameByUser.isEmpty()) {
+                System.out.println("You have already sent a claim to this person");
+            }
+            else {
+                //ajout 1 dans le nombre de reclamation d'un user ||voir fonction ban dans le user service imp
+                int addnbrsign = userareclame.getNbrSignalement() + 1;
+                userareclame.setNbrSignalement(addnbrsign);
+                rec.setUserrec(userreclame);
+                rec.setUserarec(userareclame);
+                reclamationRepository.save(rec);
+            }
         }
     }
 

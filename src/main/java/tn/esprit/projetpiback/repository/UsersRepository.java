@@ -4,6 +4,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import tn.esprit.projetpiback.entites.Evenement;
+import tn.esprit.projetpiback.entites.Reclamation;
 import tn.esprit.projetpiback.entites.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -20,6 +21,9 @@ public interface UsersRepository extends JpaRepository<User,Integer> {
     Boolean existsByUsername(String username);
     Optional<User> findByUsername(String username);
 
+    List<User> findAllByNbrSignalementIsGreaterThanEqualAndDesactiverIsFalse(int nbrrec);
+
+    List<User> findAllByReclamationsUserarec(User u);
 
 
 

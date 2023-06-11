@@ -12,4 +12,6 @@ public interface UserService {
     List<User> UserRegistredLastMonth(LocalDate date1 , LocalDate date2);
     public User getMostActiveUser() ;
 
+    void banUser();
+
 }
