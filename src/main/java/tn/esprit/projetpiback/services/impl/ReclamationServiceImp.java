@@ -83,4 +83,5 @@ public class ReclamationServiceImp implements ReclamationService {
     public List<Reclamation> getAllReclamations() {
         return reclamationRepository.findAll();
     }
+    //ban user function in userservice
 }
