@@ -1,8 +1,8 @@
-package tn.esprit.authentification.repository;
+package tn.esprit.projetpiback.repository;
 
-import tn.esprit.authentification.models.ResetPasswordToken;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import tn.esprit.projetpiback.entites.ResetPasswordToken;
 
 @Repository
 public interface ResetPasswordTokenRepository extends JpaRepository<ResetPasswordToken, Long> {

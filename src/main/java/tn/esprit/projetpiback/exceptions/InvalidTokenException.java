@@ -1,4 +1,4 @@
-package tn.esprit.authentification.exceptions;
+package tn.esprit.projetpiback.exceptions;
 
 public class InvalidTokenException extends RuntimeException {
     public InvalidTokenException(String message) {

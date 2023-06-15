@@ -16,6 +16,7 @@ public class RegisterDto {
     private String password;
     private String prenomPere;
     private String roleName;
+    private String adresse;
 
 
 }

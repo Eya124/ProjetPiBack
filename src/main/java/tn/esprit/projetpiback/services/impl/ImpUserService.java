@@ -92,5 +92,30 @@ public class ImpUserService implements UserService {
         return null;
     }
 
+    @Override
+    public Integer getNewUserWeek() {
+        LocalDate d1 = LocalDate.now();
+        LocalDate d2 =d1.minusDays(7);
+
+        List<User> usersNew = usersRepository.findAllByFirstlogBetween(d1,d2);
+      return usersNew.size();
+    }
+
+    @Override
+    public Integer getDifferenceNewWeekLastWeek() {
+        LocalDate d1 = LocalDate.now();
+        LocalDate d2 =d1.minusDays(7);
+        LocalDate d3 =d1.minusDays(14);
+        List<User> usersNew = usersRepository.findAllByFirstlogBetween(d1,d2);
+        List<User> usersOld = usersRepository.findAllByFirstlogBetween(d2,d3);
+        if (usersNew.size()>usersOld.size()){
+            return  (usersOld.size()/usersNew.size())*100;
+        }else {
+            return (usersNew.size()/usersOld.size())*100;
+        }
+    }
+
+    ;
+
 
 }

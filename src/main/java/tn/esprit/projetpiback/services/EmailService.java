@@ -1,11 +1,9 @@
-package tn.esprit.authentification.service;
+package tn.esprit.projetpiback.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
-
-import java.io.Console;
 
 @RequiredArgsConstructor
 @Service

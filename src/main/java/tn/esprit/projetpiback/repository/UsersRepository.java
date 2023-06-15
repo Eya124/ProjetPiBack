@@ -19,6 +19,8 @@ public interface UsersRepository extends JpaRepository<User,Integer> {
     List<User> findAllByFirstlogBetween(LocalDate d1 , LocalDate d2);
     Boolean existsByUsername(String username);
     Optional<User> findByUsername(String username);
+    @Query("SELECT u FROM User u WHERE u.username = :username")
+    public User findUserByUsername(String username);
 
 
 

@@ -1,4 +1,4 @@
-package tn.esprit.authentification.models;
+package tn.esprit.projetpiback.entites;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,9 +24,9 @@ public class ResetPasswordToken {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
-    private UserEntity user;
+    private User user;
 
-    public ResetPasswordToken(String token, Date expirationDate, UserEntity user) {
+    public ResetPasswordToken(String token, Date expirationDate, User user) {
         this.token = token;
         this.expirationDate = expirationDate;
         this.user = user;
