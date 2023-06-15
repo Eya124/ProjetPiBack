@@ -14,4 +14,6 @@ public interface UserService {
     public Integer getNewUserWeek();
     public Integer getDifferenceNewWeekLastWeek();
 
+    void banUser();
+
 }

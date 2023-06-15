@@ -118,4 +118,17 @@ public class ImpUserService implements UserService {
     ;
 
 
+    // archiver les utilisateurs qui ont un nombre de reclamation plus que 5
+    @Scheduled(fixedRate = 30000)
+    @Override
+    public void banUser() {
+        List<User> usersToArchive = usersRepository.findAllByNbrSignalementIsGreaterThanEqualAndDesactiverIsFalse(5);
+        //System.out.print(usersToArchive);
+        for (User u: usersToArchive) {
+            u.setDesactiver(true);
+        }
+        usersRepository.saveAll(usersToArchive);
+    }
+
+
 }

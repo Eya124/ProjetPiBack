@@ -29,6 +29,5 @@ public class Reservation {
     @ManyToOne
     private User user;
 
-    @OneToOne()
-    private Reclamation reclamation;
+
 }
