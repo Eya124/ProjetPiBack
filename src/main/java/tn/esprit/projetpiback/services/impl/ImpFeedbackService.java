@@ -109,15 +109,24 @@ public class ImpFeedbackService implements FeedbackService {
             }
 
 
+            //check if the comment already has a feedback
+            Feedback fd = feedbackRepository.findByCommentairefdIdCommentaire(comment.getIdCommentaire());
+            if (fd == null) {
+                // Create and set the feedback entity
+                Feedback feedback = new Feedback();
+                comment.setFeedback(feedback);
+                feedback.setCommentairefd(comment);
+                feedbackRepository.saveAndFlush(feedback);
+                commentaireRepository.saveAndFlush(comment);
+            }
+            else {
 
+                fd.setFeedbackNumber(feedbackNumber);
+                comment.setFeedback(fd);
+                feedbackRepository.saveAndFlush(fd);
+                commentaireRepository.saveAndFlush(comment);
 
-            // Create and set the feedback entity
-            Feedback feedback = new Feedback();
-            feedback.setFeedbackNumber(feedbackNumber);
-            comment.setFeedback(feedback);
-            feedbackRepository.saveAndFlush(feedback);
-            commentaireRepository.saveAndFlush(comment);
-
+            }
 
         }
 
