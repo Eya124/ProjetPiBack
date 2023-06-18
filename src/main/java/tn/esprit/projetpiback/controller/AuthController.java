@@ -40,7 +40,7 @@ public class AuthController {
     private final ResetPasswordTokenRepository resetPasswordTokenRepository;
     private final EmailService emailService;
     private final CustomUserDetailsService customUserDetailsService;
-
+    @CrossOrigin
     @Transactional
     @PostMapping("reset-password/request/{email}")
     public ResponseEntity<String> requestPasswordReset(@PathVariable String email) {
@@ -61,13 +61,13 @@ public class AuthController {
         resetPasswordTokenRepository.save(resetPasswordToken);
 
         // Send email to the user with the password reset link
-        String resetPasswordLink = "http://localhost:9091/api/auth/reset-password/1/" + token;
+        String resetPasswordLink = "http://localhost:4200/reset-password/" + token;
         emailService.sendResetPasswordEmail(email, resetPasswordLink);System.out.println("1234567");
 
 
         return new ResponseEntity<>("Password reset email sent", HttpStatus.OK);
     }
-
+@CrossOrigin
     @GetMapping("reset-password/{token}")
     public ResponseEntity<String> validateResetPasswordToken(@PathVariable String token) {
         ResetPasswordToken resetPasswordToken = resetPasswordTokenRepository.findByToken(token);
@@ -77,9 +77,10 @@ public class AuthController {
 
         return new ResponseEntity<>("Token validated", HttpStatus.OK);
     }
-
+@CrossOrigin
+@Transactional
     @PostMapping("reset-password/1/{token}")
-    public ResponseEntity<String> resetPassword(@PathVariable String token, @RequestBody String newPassword) {
+    public ResponseEntity<String> resetPassword(@PathVariable String token, @RequestParam("newPassword") String newPassword) {
         ResetPasswordToken resetPasswordToken = resetPasswordTokenRepository.findByToken(token);
         if (resetPasswordToken == null || resetPasswordToken.getExpirationDate().before(new Date())) {
             throw new InvalidTokenException("Invalid or expired reset password token");
@@ -87,8 +88,8 @@ public class AuthController {
 
         User user = resetPasswordToken.getUser();
         System.out.println(user.getPassword());
-        user.setPassword(null);
-        userRepository.save(user);
+    System.out.println("newPassword: " + newPassword);
+        user.setPassword(passwordEncoder.encode(newPassword));
 
         return new ResponseEntity<>("Password reset successfully", HttpStatus.OK);
     }
@@ -96,18 +97,19 @@ public class AuthController {
 
 
 
-
-    /*@GetMapping("/current")
+   /*@GetMapping("/current")
     public Optional<User> getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
         Optional<User> userDTO = userRepository.findByUsername(username);
         return userDTO;
     }*/
-   @GetMapping("/current")
+   @CrossOrigin
+
+  @GetMapping("/current")
     public User getUserConnecte(){
         return userRepository.findUserByUsername(customUserDetailsService.getCurrentUserName())  ;  }
-
+    @CrossOrigin
     @PostMapping("/login")
     public ResponseEntity<AuthResponseDTO> login(@RequestBody LoginDto loginDto){
         Authentication authentication = authenticationManager.authenticate(
@@ -118,7 +120,7 @@ public class AuthController {
         String token = jwtGenerator.generateToken(authentication);
         return new ResponseEntity<>(new AuthResponseDTO(token), HttpStatus.OK);
     }
-
+@CrossOrigin
     @PostMapping("register")
     public ResponseEntity<String> register(@RequestBody RegisterDto registerDto) {
         if (userRepository.existsByUsername(registerDto.getUsername())) {

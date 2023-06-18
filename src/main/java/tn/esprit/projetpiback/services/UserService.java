@@ -13,6 +13,7 @@ public interface UserService {
     public User getMostActiveUser() ;
     public Integer getNewUserWeek();
     public Integer getDifferenceNewWeekLastWeek();
+    public List<User> getAll();
 
     void banUser();
 

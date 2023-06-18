@@ -22,6 +22,8 @@ public class ImpUserService implements UserService {
 
 
 
+
+
     @Scheduled(cron = "0 0 12 * * *")
     @Override
     public void sendEmail() {
@@ -113,6 +115,11 @@ public class ImpUserService implements UserService {
         }else {
             return (usersNew.size()/usersOld.size())*100;
         }
+    }
+
+    @Override
+    public List<User> getAll() {
+        return usersRepository.findAll();
     }
 
     ;

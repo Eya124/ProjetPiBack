@@ -22,7 +22,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ImpFeedbackService implements FeedbackService {
 
-    private final FeedbackRepository feedbackRepository;
+    /*private final FeedbackRepository feedbackRepository;
     private final PostRepository postRepository;
     private final CommentaireRepository commentaireRepository;
 
@@ -82,7 +82,7 @@ public class ImpFeedbackService implements FeedbackService {
         //traitement de commentaire
 
         //it works but i should affect every comment to 1 feedback id
-        List<Post> allPosts = postRepository.findAll();
+        /*List<Post> allPosts = postRepository.findAll();
         List<Commentaire> allComments = new ArrayList<>();
         for (Post p:allPosts) {
             for (Commentaire com: p.getCommentaires()) {
@@ -122,7 +122,7 @@ public class ImpFeedbackService implements FeedbackService {
         }
 
 
-        }
+        }*/
 
     }
 
