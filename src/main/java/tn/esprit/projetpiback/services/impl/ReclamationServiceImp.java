@@ -84,4 +84,7 @@ public class ReclamationServiceImp implements ReclamationService {
         return reclamationRepository.findAll();
     }
     //ban user function in userservice
+
+    //zid get by id
+
 }

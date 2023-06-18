@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -19,6 +20,11 @@ public class Reclamation {
     private int idReclamation;
     private String object;
     private String description;
+
+    private Date daterec;
+    private Boolean Status;
+    private Boolean archive;
+
 
 
     @JsonIgnore
