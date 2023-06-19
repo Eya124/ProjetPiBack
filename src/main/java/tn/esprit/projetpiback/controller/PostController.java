@@ -1,6 +1,8 @@
 package tn.esprit.projetpiback.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.projetpiback.entites.Commentaire;
 import tn.esprit.projetpiback.entites.Post;
@@ -11,8 +13,10 @@ import tn.esprit.projetpiback.services.impl.ImpPostService;
 import java.util.List;
 
 @RestController
+@Validated
 @RequestMapping("post")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:4200") // Remplacez l'origine par l'URL de votre frontend Angular
 public class PostController {
     private final PostService postService;
 
@@ -28,14 +32,14 @@ public class PostController {
     private void deletePost(@PathVariable int id){
         postService.deletePost(id);
     }
-    @PostMapping()
+    @PostMapping("/add")
     public void ajouterPost(@RequestBody Post post){
         postService.ajouterPost(post);
     }
-    @PutMapping()
-    private Post updatePost(@RequestBody Post post){
+    @PutMapping("/update")
+    private void updatePost( @RequestBody Post post){
         postService.updatePost(post);
-        return post;
+
     }
     // Autre constructeur existant qui ne prend pas de paramètre
     /*public PostController() {
@@ -57,14 +61,14 @@ public class PostController {
 //    }
 
     @PostMapping("/{postId}/comments")
-    public String addCommentToPost(@PathVariable Integer postId, @RequestBody Commentaire commentaire) {
-        postService.addCommentToPost(postId, commentaire);
+    public String addCommentToPost(@PathVariable Integer postId,@PathVariable Integer idUser, @RequestBody Commentaire commentaire) {
+        postService.addCommentToPost(postId,idUser, commentaire);
         return "Commentaire ajouté avec succès";
     }
 
-    @PostMapping("/comments/{commentId}/replies")
-    public String addReplyToComment(@PathVariable Integer commentId, @RequestBody Commentaire reply) {
-        postService.addReplyToComment(commentId, reply);
-        return "Réponse ajoutée avec succès";
-    }
+//    @PostMapping("/comments/{commentId}/replies")
+//    public String addReplyToComment(@PathVariable Integer commentId, @RequestBody Commentaire reply) {
+//        postService.addReplyToComment(commentId, reply);
+//        return "Réponse ajoutée avec succès";
+//    }
 }

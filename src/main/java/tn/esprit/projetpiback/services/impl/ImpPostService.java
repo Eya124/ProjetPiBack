@@ -1,6 +1,7 @@
 package tn.esprit.projetpiback.services.impl;
 
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 import tn.esprit.projetpiback.entites.*;
 import tn.esprit.projetpiback.repository.CommentaireRepository;
 import tn.esprit.projetpiback.repository.NotificationRepository;
@@ -8,10 +9,13 @@ import tn.esprit.projetpiback.repository.PostRepository;
 import tn.esprit.projetpiback.repository.UsersRepository;
 import tn.esprit.projetpiback.services.PostService;
 
+import javax.transaction.Transactional;
+import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.List;
 
 @Service
+@Validated
 public class ImpPostService implements PostService {
 
     private final PostRepository postRepository;
@@ -27,8 +31,8 @@ public class ImpPostService implements PostService {
     }
 
     @Override
-    public void ajouterPost(Post p) {
-        postRepository.save(p);
+    public void ajouterPost(@Valid Post p) {
+        postRepository.save(p);/*
         List<User> usersInteresses = usersRepository.findUsersInteresses();
         for (User user : usersInteresses) {
             Notification notification = Notification.builder()
@@ -38,15 +42,16 @@ public class ImpPostService implements PostService {
                     // Autres informations pertinentes
                     .build();
 
-            notification.setUser(user);
+           // notification.setUser(user);
             notificationRepository.save(notification);
-            user.getNotifications().add(notification);
-        }
+            user.getNotifications().add(notification);*/
+       // }
     }
 
     @Override
     public void updatePost(Post p) {
         postRepository.save(p);
+
     }
 
     @Override
@@ -65,30 +70,35 @@ public class ImpPostService implements PostService {
     }
 
     @Override
-    public void addCommentToPost(Integer idPost, Commentaire commentaire) {
+    @Transactional
+    public void addCommentToPost(Integer idPost,Integer idUser, Commentaire commentaire) {
         // Logique pour ajouter le commentaire au post
         Post post = postRepository.findById(idPost).orElse(null);
-        if (post != null) {
+        User user = usersRepository.findById(idUser).orElse(null);
+        if (post != null && user != null) {
+            //commentaireRepository.saveAndFlush(commentaire);
             commentaire.setPost(post);
-            post.getCommentaires().add(commentaire);
-            postRepository.save(post);
+            commentaire.setUser(user);
+            /*post.getCommentaires().add(commentaire);
+            postRepository.save(post);*/
+            commentaireRepository.save(commentaire);
         }
 
         // Création et association d'une notification pour les utilisateurs intéressés
-        Post postN = commentaire.getPost();
-        List<User> usersInteresses = usersRepository.findUsersInteresses();
-        for (User user : usersInteresses) {
-            Notification notification = Notification.builder()
-                    .content("Un nouveau commentaire a été ajouté au post : " + post.getDescription())
-                    .createdAt(LocalDate.now())
-                    .type(NotificationType.NOUVEAU_COMMENTAIRE)
-                    // Autres informations pertinentes
-                    .build();
-
-            notification.setUser(user);
-            notificationRepository.save(notification);
-            user.getNotifications().add(notification);
-        }
+//        Post postN = commentaire.getPost();
+//        List<User> usersInteresses = usersRepository.findUsersInteresses();
+//        for (User user : usersInteresses) {
+//            Notification notification = Notification.builder()
+//                    .content("Un nouveau commentaire a été ajouté au post : " + post.getDescription())
+//                    .createdAt(LocalDate.now())
+//                    .type(NotificationType.NOUVEAU_COMMENTAIRE)
+//                    // Autres informations pertinentes
+//                    .build();
+//
+//            notification.setUser(user);
+//            notificationRepository.save(notification);
+//            user.getNotifications().add(notification);
+//        }
     }
 
     @Override

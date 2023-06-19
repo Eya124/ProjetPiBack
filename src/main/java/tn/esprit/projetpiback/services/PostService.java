@@ -11,6 +11,6 @@ public interface PostService {
     List<Post> getAllPost();
     Post getByIdPost(Integer id);
     void deletePost(Integer id);
-    void addCommentToPost(Integer idPost, Commentaire commentaire);
+    void addCommentToPost(Integer idPost,Integer idUser, Commentaire commentaire);
     void addReplyToComment(Integer idCommentaire, Commentaire reply);
 }
