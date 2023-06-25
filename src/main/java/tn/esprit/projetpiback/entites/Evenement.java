@@ -18,6 +18,7 @@ public class Evenement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idEvenement;
+    private String title ;
     private Date dateDebut;
     private Date dateFin;
     private int nbrMaxParticipants;

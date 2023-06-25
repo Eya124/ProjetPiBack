@@ -32,35 +32,21 @@ public class ImplEvenementService implements EvenementService {
     public Reservation addReservationAndAssignToEvenement(Integer idUser, Long idEvenement) {
 
         Reservation reservation1 = Reservation.builder()
-                //.user()
                 .build();
 
-        Evenement evenement = EvenementRepository.findById(idEvenement).orElse(null);
-        User user = UsersRepository.findById(idUser).orElse(null);
+        Evenement evenement = EvenementRepository.findById(idEvenement).orElseThrow(() -> new IllegalArgumentException("evenement not found with this id"+idEvenement));
+        User user = UsersRepository.findById(idUser).orElseThrow(() -> new IllegalArgumentException("user not found with this id"+idUser));
         Assert.notNull(evenement, "id not found");
-        Assert.notNull(user, "id not found");
         reservation1.setUser(user);
         ReservationRepository.saveAndFlush(reservation1);
-      /*  List<Reservation> reservations =ReservationRepository.findReservationsByUserIdUserAndEvenementsDateDebutBetween(idUser, evenement.getDateDebut(), evenement.getDateFin());
-        if(!reservations.isEmpty()){
-            // Une réservation existe déjà, donc modifier uniquement le champ 'actif' à 'false'
-            Reservation existingReservation = reservations.get(0);
-            existingReservation.setActif(false);
-            ReservationRepository.save(existingReservation);
-            return existingReservation;
-
-        }*/
         List<Reservation> reservationsActif =ReservationRepository.findReservationsByUserIdUserAndEvenementsDateDebutBetweenAndActif(idUser, evenement.getDateDebut(), evenement.getDateFin(), false);
-        if(!reservationsActif.isEmpty()){
-            throw new RuntimeException("Une réservation existe déjà pour cet utilisateur et cet événement à la même date:"+evenement.getDateDebut());
-        }
-        if(evenement.getNbrMaxParticipants() <= evenement.getNbrParticipants()){
-            throw new RuntimeException("désole, l'événement est complet");
-        }
+        Assert.isTrue(reservationsActif.isEmpty(),"Une réservation existe déjà pour cet utilisateur à la même date : " + evenement.getDateDebut());
+        Assert.isTrue(evenement.getNbrMaxParticipants() > evenement.getNbrParticipants(),"Désolé, l'événement est complet");
         evenement.getReservations().add(reservation1);//TCHOUF CLASS ELI TJERI
         this.insertEvenementWithNbrParticipants(idEvenement);
         return reservation1;
     }
+
 
 
 }
