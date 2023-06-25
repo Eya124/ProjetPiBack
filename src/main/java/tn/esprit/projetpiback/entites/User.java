@@ -49,7 +49,6 @@ public class User {
     private List<Reclamation> reclamations;
 
 
-
     @OneToMany(mappedBy = "usereve")
     private List<Evenement> evenements;
 
@@ -66,6 +65,8 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     private List<Role> roles = new ArrayList<>();
 
+    @OneToMany(mappedBy = "usercommentaire")
+    private List<Commentaire> commentaires;
     public User(String password, String username, List<Role> roles) {
         this.password = password;
         this.username = username;

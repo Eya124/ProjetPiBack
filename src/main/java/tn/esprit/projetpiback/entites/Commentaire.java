@@ -1,5 +1,6 @@
 package tn.esprit.projetpiback.entites;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,17 +25,21 @@ public class Commentaire {
 
     private LocalDate createdAt;
 
-    @ManyToOne
-    @JoinColumn(name = "post_id")
-    @JsonBackReference
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "post")
+   // @JsonBackReference
+    @JsonIgnore
     private Post post;
     @ManyToOne
-    @JsonBackReference
+    // @JsonBackReference
     private Commentaire parentComment;
     @OneToMany(mappedBy = "parentComment", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Commentaire> replies;
+    private Boolean archive;
 
+    @ManyToOne
+    private User usercommentaire;
     @OneToOne
     private Feedback feedback;
 }
