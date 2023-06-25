@@ -11,5 +11,10 @@ public interface UserService {
     List<User>  findPartner(String name, String lastname);
     List<User> UserRegistredLastMonth(LocalDate date1 , LocalDate date2);
     public User getMostActiveUser() ;
+    public Integer getNewUserWeek();
+    public Integer getDifferenceNewWeekLastWeek();
+    public List<User> getAll();
+
+    void banUser();
 
 }

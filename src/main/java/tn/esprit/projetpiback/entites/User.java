@@ -2,13 +2,11 @@ package tn.esprit.projetpiback.entites;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -16,8 +14,10 @@ import java.util.List;
 @Entity
 @Setter
 @Getter
-@AllArgsConstructor
+@Data
 @NoArgsConstructor
+
+@AllArgsConstructor
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,23 +27,31 @@ public class User {
     private String prenom;
     private Long telephone;
     private int age;
+    private boolean desactiver;
     private Long cin;
     private String prenomPere;
     private int numPere;
     private String password;
-    private String email;
+    private String username;
     private String adresse;
     private LocalDate firstlog;
     private LocalDate lastLog;
     private int nbrSignalement;
     private boolean interesse;
+
     @JsonIgnore
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "userpost")
     private List<Post> posts;
 
-   // @JsonIgnore
-  //  @OneToMany(mappedBy = "classe")
-   // private List<coursClassroom> coursClassrooms;
+    @JsonIgnore
+    @OneToMany(mappedBy = "userrec")
+    private List<Reclamation> reclamations;
+
+
+    @OneToMany(mappedBy = "usereve")
+    private List<Evenement> evenements;
+
+
    @OneToMany
    private List<Notification> notifications;
 
@@ -51,7 +59,16 @@ public class User {
     @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<Reservation> reservations;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "idUser"),
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+    private List<Role> roles = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "usercommentaire")
     private List<Commentaire> commentaires;
+    public User(String password, String username, List<Role> roles) {
+        this.password = password;
+        this.username = username;
+        this.roles = roles;
+    }
 }

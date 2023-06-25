@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import tn.esprit.projetpiback.services.FeedbackService;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -30,12 +31,15 @@ public class Commentaire {
     @JsonIgnore
     private Post post;
     @ManyToOne
-    @JsonBackReference
+    // @JsonBackReference
     private Commentaire parentComment;
     @OneToMany(mappedBy = "parentComment", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Commentaire> replies;
+    private Boolean archive;
+
     @ManyToOne
-    @JoinColumn(name = "idUser")
-    private User user;
+    private User usercommentaire;
+    @OneToOne
+    private Feedback feedback;
 }

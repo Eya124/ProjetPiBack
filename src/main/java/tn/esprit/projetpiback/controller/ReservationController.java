@@ -1,5 +1,6 @@
 package tn.esprit.projetpiback.controller;
 
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.projetpiback.entites.Reservation;
 import tn.esprit.projetpiback.services.ReservationService;
@@ -12,9 +13,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ReservationController {
     private final ReservationService iAppService;
-   @PostMapping
-   public Reservation save(@RequestBody Reservation reservation){
-       return iAppService.addResrvation(reservation);
+   @PostMapping("/archiverReservation/{reservationId}")
+  public void save(@PathVariable("reservationId") Integer reservationId){
+    iAppService.insertReservationWithActif(reservationId);
    }
 
 
@@ -23,8 +24,12 @@ public class ReservationController {
         return iAppService.getALl();
     }
 
-   @DeleteMapping("/{id}")
+   /*@DeleteMapping("/{id}")
    void delete(@PathVariable int id){
        iAppService.delete(id);
-   }
+   }*/
+    @GetMapping("/nbReservation/{idEvenement}")
+    public int nbReservationParUser(@PathVariable Long idEvenement) {
+        return iAppService.getNbrReservationActifEvenement(idEvenement, false);
+    }
 }

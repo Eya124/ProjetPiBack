@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -16,8 +17,14 @@ import java.util.List;
 public class Evenement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idEvenement;
+    private Long idEvenement;
+    private Date dateDebut;
+    private Date dateFin;
+    private int nbrMaxParticipants;
+    private int nbrParticipants;
 
+    @ManyToOne
+    private User usereve;
     @ManyToMany
     private List<Reservation> reservations;
 }

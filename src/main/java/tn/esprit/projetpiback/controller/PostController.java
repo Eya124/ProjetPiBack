@@ -28,13 +28,18 @@ public class PostController {
     public Post getByIdPost(@PathVariable int id){
         return postService.getByIdPost(id);
     }
-    @DeleteMapping("/{id}")
-    private void deletePost(@PathVariable int id){
+    @DeleteMapping("/delete/{id}")
+    private void deletePost(@PathVariable int id) {
         postService.deletePost(id);
     }
-    @PostMapping("/add")
-    public void ajouterPost(@RequestBody Post post){
-        postService.ajouterPost(post);
+    @GetMapping("/Notarchived")
+    private List<Post> getAllNotArchivedPosts(){
+        return postService.getAllNotArchivedPosts();
+    }
+    @PostMapping("/add/{idUser}")
+    public void ajouterPost(@RequestBody Post post, @PathVariable int idUser){
+        postService.ajouterPost(post,idUser);
+
     }
     @PutMapping("/update")
     private void updatePost( @RequestBody Post post){

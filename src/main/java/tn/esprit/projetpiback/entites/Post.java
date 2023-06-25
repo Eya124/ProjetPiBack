@@ -20,7 +20,7 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idPost;
     @NotBlank(message = "Le champ link_piecejointe est obligatoire")
-    private String link_piecejointe;
+    private String linkpiecejointe;
     @NotBlank(message = "Le champ link est obligatoire")
     private String link;
     @NotBlank(message = "Le champ description est obligatoire")
@@ -29,15 +29,18 @@ public class Post {
     private String adresse;
     @NotBlank(message = "Le champ date est obligatoire")
     private LocalDate date;
-    private int nbr_participant;
-    private String type_logement;
-    private String nbr_likes;
-    private int nbr_signalement;
+    private int nbrParticipant;
+    private String typeLogement;
+    private String nbrLikes;
+   // private int nbr_signalement;
 
-
+    private Boolean archive;
     @OneToMany(mappedBy = "post")
     private List<Commentaire> commentaires;
 
     @ManyToOne
-    User user;
+    private User userpost;
+
+    @OneToOne
+    Feedback feedback;
 }

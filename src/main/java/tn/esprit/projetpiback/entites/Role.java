@@ -17,6 +17,6 @@ import javax.persistence.Id;
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idRole;
-    private String roleName;
+    private Integer id;
+    private String name;
 }

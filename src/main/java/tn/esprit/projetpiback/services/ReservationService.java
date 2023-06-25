@@ -5,7 +5,14 @@ import tn.esprit.projetpiback.entites.Reservation;
 import java.util.List;
 
 public interface ReservationService {
-    Reservation addResrvation (Reservation reservation);
+
     List<Reservation> getALl();
-    void delete(int id);
+
+    void insertEvenementWithNbrParticipants(Integer reservationId);
+
+    int getNbrReservationActifEvenement(Long idEvenement, boolean actif);
+
+    void insertReservationWithActif(Integer reservationId);
+
+
 }

@@ -1,13 +1,13 @@
 package tn.esprit.projetpiback.entites;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Date;
+import java.util.List;
 
 @Entity
 @Setter
@@ -18,4 +18,21 @@ public class Reclamation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idReclamation;
+    private String object;
+    private String description;
+
+    private Date daterec;
+    private Boolean Status;
+    private Boolean archive;
+
+
+
+    @JsonIgnore
+    @OneToOne
+    private User userarec;
+
+    @ManyToOne
+    private User userrec;
+
+
 }
