@@ -12,7 +12,9 @@ import org.springframework.mail.javamail.JavaMailSender;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -24,11 +26,13 @@ public class ImpUserService implements UserService {
 
 
 
-    @Scheduled(cron = "0 0 12 * * *")
+  // @Scheduled(cron = "0 0 12 * * *")
+ @Scheduled(cron = "0/60 * * * * *")
+
     @Override
     public void sendEmail() {
         LocalDate date = LocalDate.now();
-        LocalDate d1 =date.minusDays(15);
+        LocalDate d1 =date.minusDays(1);
         LocalDate d2 =date.minusDays(30);
         LocalDate d3 =date.minusDays(120);
         List<User> users1=usersRepository.findAllByLastLog(d1);
@@ -57,7 +61,7 @@ public class ImpUserService implements UserService {
 
         }
         for(User u:users3){
-            usersRepository.delete(u);
+            u.setDesactiver(true);
         }
 
 
@@ -120,6 +124,25 @@ public class ImpUserService implements UserService {
     @Override
     public List<User> getAll() {
         return usersRepository.findAll();
+    }
+
+    @Override
+    public Map<String, Long> getUsersCount() {
+        LocalDate now = LocalDate.now();
+
+        long usersCountThisMonth = usersRepository.getUsersCountThisMonth(now);
+        long usersCountThisYear = usersRepository.getUsersCountThisYear(now);
+
+        LocalDate startOfWeek = now.minusDays(now.getDayOfWeek().getValue() - 1);
+        LocalDate endOfWeek = now.plusDays(7 - now.getDayOfWeek().getValue());
+        long usersCountThisWeek = usersRepository.getUsersCountThisWeek(startOfWeek, endOfWeek);
+
+        Map<String, Long> usersCountMap = new HashMap<>();
+        usersCountMap.put("Year", usersCountThisYear);
+        usersCountMap.put("Month", usersCountThisMonth);
+        usersCountMap.put("Week", usersCountThisWeek);
+
+        return usersCountMap;
     }
 
     ;

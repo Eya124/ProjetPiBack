@@ -9,6 +9,7 @@ import tn.esprit.projetpiback.repository.UsersRepository;
 import tn.esprit.projetpiback.services.UserService;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -18,6 +19,11 @@ import java.util.Optional;
 public class UserController {
     private final UserService userService;
     private final UsersRepository userRepository;
+@CrossOrigin
+    @GetMapping("/count")
+    public Map<String, Long> getUsersCount() {
+    return userService.getUsersCount();
+    }
 
     @CrossOrigin
     @GetMapping("/current")
