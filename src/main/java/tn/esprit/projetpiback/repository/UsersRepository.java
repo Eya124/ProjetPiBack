@@ -27,6 +27,15 @@ public interface UsersRepository extends JpaRepository<User,Integer> {
 
     List<User> findAllByReclamationsUserarec(User u);
 
+    @Query(value = "SELECT COUNT(*) FROM user WHERE MONTH(firstlog) = MONTH(:date) AND YEAR(firstlog) = YEAR(:date)", nativeQuery = true)
+    long getUsersCountThisMonth(LocalDate date);
+
+    @Query(value = "SELECT COUNT(*) FROM user WHERE YEAR(firstlog) = YEAR(:date)", nativeQuery = true)
+    long getUsersCountThisYear(LocalDate date);
+
+    @Query(value = "SELECT COUNT(*) FROM user WHERE firstlog >= :startOfWeek AND firstlog <= :endOfWeek", nativeQuery = true)
+    long getUsersCountThisWeek(LocalDate startOfWeek, LocalDate endOfWeek);
+
 
 
     @Query("SELECT u FROM User u WHERE u.interesse = true")

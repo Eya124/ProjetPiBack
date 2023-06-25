@@ -36,6 +36,7 @@ public class User {
     private String adresse;
     private LocalDate firstlog;
     private LocalDate lastLog;
+    private String image;
     private int nbrSignalement;
     private boolean interesse;
 
