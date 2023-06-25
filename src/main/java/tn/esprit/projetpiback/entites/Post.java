@@ -26,7 +26,7 @@ public class Post {
     private int nbr_participant;
     private String type_logement;
     private String nbr_likes;
-    private int nbr_signalement;
+   // private int nbr_signalement;
 
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
@@ -35,4 +35,7 @@ public class Post {
 
     @ManyToOne
     User userpost;
+
+    @OneToOne
+    Feedback feedback;
 }

@@ -10,5 +10,6 @@ public interface EvenementRepository extends JpaRepository<Evenement,Long> {
 
 
 // sl7ha ayed kent hka "findAllUserIdUser"
-    List<Evenement> findByUsereveIdUser (int iduser);
+    //findByUsereveIdUser
+    List<Evenement> findAllByUsereveIdUser (int iduser);
 }

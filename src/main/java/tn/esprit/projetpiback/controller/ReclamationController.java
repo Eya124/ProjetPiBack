@@ -7,6 +7,8 @@ import tn.esprit.projetpiback.entites.Reclamation;
 import tn.esprit.projetpiback.entites.User;
 import tn.esprit.projetpiback.services.ReclamationService;
 
+import java.util.List;
+
 
 @RestController
 @RequestMapping("reclamation")
@@ -15,9 +17,13 @@ public class ReclamationController {
     private final ReclamationService reclamationService;
 
     @PostMapping("/post/{iduserrec1}/{iduserarec2}")
-    public void ajouterReclamation(@RequestBody Reclamation rec, @PathVariable int iduserrec1,@PathVariable int iduserarec2) {
-            reclamationService.ajouterReclamation(rec,iduserrec1,iduserarec2);
+    public void ajouterReclamation(@PathVariable int iduserrec1,@PathVariable int iduserarec2,@RequestBody Reclamation rec) {
+            reclamationService.ajouterReclamation(iduserrec1,iduserarec2,rec);
     }
 
+    @GetMapping("/getall")
+    public List<Reclamation> getAllReclamations() {
+        return reclamationService.getAllReclamations();
+    }
 
 }

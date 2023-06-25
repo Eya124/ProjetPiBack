@@ -22,6 +22,8 @@ public class ImpUserService implements UserService {
 
 
 
+
+
     @Scheduled(cron = "0 0 12 * * *")
     @Override
     public void sendEmail() {
@@ -41,7 +43,7 @@ public class ImpUserService implements UserService {
             message=message+"Hello "+ u.getNom()+ ",\n" +
                     "\n" +
                     "We hope this email finds you well. "+"\n"+" We wanted to inform you that it has been 15 days since your last visit to BEST CAMP. We wanted to reach out and let you know that we miss you!";
-            sendEmailParametre(u.getEmail(),subject,message);
+            sendEmailParametre(u.getUsername(),subject,message);
 
 
             }
@@ -50,7 +52,7 @@ public class ImpUserService implements UserService {
             message=message+"Hello "+ u.getNom()+ ",\n" +
                     "\n" +
                     "We hope this email finds you well. "+"\n"+" We wanted to inform you that it has been 30 days since your last visit to BEST CAMP. We wanted to reach out and let you know that we miss you!"+"\n"+"Your account will be removed on "+d4;
-            sendEmailParametre(u.getEmail(),subject,message);
+            sendEmailParametre(u.getUsername(),subject,message);
 
 
         }
@@ -90,6 +92,49 @@ public class ImpUserService implements UserService {
     @Override
     public User getMostActiveUser() {
         return null;
+    }
+
+    @Override
+    public Integer getNewUserWeek() {
+        LocalDate d1 = LocalDate.now();
+        LocalDate d2 =d1.minusDays(7);
+
+        List<User> usersNew = usersRepository.findAllByFirstlogBetween(d1,d2);
+      return usersNew.size();
+    }
+
+    @Override
+    public Integer getDifferenceNewWeekLastWeek() {
+        LocalDate d1 = LocalDate.now();
+        LocalDate d2 =d1.minusDays(7);
+        LocalDate d3 =d1.minusDays(14);
+        List<User> usersNew = usersRepository.findAllByFirstlogBetween(d1,d2);
+        List<User> usersOld = usersRepository.findAllByFirstlogBetween(d2,d3);
+        if (usersNew.size()>usersOld.size()){
+            return  (usersOld.size()/usersNew.size())*100;
+        }else {
+            return (usersNew.size()/usersOld.size())*100;
+        }
+    }
+
+    @Override
+    public List<User> getAll() {
+        return usersRepository.findAll();
+    }
+
+    ;
+
+
+    // archiver les utilisateurs qui ont un nombre de reclamation plus que 5
+    @Scheduled(fixedRate = 30000)
+    @Override
+    public void banUser() {
+        List<User> usersToArchive = usersRepository.findAllByNbrSignalementIsGreaterThanEqualAndDesactiverIsFalse(5);
+        //System.out.print(usersToArchive);
+        for (User u: usersToArchive) {
+            u.setDesactiver(true);
+        }
+        usersRepository.saveAll(usersToArchive);
     }
 
 

@@ -1,10 +1,12 @@
 package tn.esprit.projetpiback.entites;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -19,10 +21,18 @@ public class Reclamation {
     private String object;
     private String description;
 
-    @OneToMany(mappedBy = "reclamation")
-    private List<User> users;
+    private Date daterec;
+    private Boolean Status;
+    private Boolean archive;
 
-    @OneToOne()
-    private Reservation reservation;
+
+
+    @JsonIgnore
+    @OneToOne
+    private User userarec;
+
+    @ManyToOne
+    private User userrec;
+
 
 }
