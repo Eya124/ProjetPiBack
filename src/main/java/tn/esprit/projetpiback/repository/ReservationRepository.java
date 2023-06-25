@@ -13,12 +13,15 @@ import java.util.List;
 
 @Repository
 public interface ReservationRepository extends JpaRepository<Reservation, Integer> {
-    List<Reservation> findAllByActif(boolean actif);
+ //   List<Reservation> findAllByActif(boolean actif);
     int countReservationsByEvenements_IdEvenementAndActif (Long idEvenement, boolean actif);
-    List<Reservation> findReservationsByUserIdUserAndEvenementsDateDebutBetween (Integer idUser, Date dateDebut, Date dateFin);
+    //List<Reservation> findReservationsByUserIdUserAndEvenementsActif(Integer idUser, boolean actif);
+  //  List<Reservation> findReservationsByUserIdUserAndEvenementsDateDebutBetween (Integer idUser, Date dateDebut, Date dateFin);
     List<Reservation> findReservationsByUserIdUserAndEvenementsDateDebutBetweenAndActif (Integer idUser, Date dateDebut, Date dateFin, boolean actif);
 
-    int countReservationsByUser_IdUser (Integer idUser);
+    @Query("SELECT e FROM Evenement e JOIN e.reservations r WHERE r.user.idUser = :userId and r.actif = false")
+    List<Evenement> findDatesEvenementsByUserId(@Param("userId") Integer userId);
+   // int countReservationsByUser_IdUser (Integer idUser);
 
     //sl7ha ayed kent hka "findAllByUserIdUserAndEvenementDateDebutBefore"
     List<Reservation> findReservationsByUserIdUserAndEvenementsDateDebutBefore(int iduserrec,Date date);

@@ -9,11 +9,14 @@ import tn.esprit.projetpiback.services.EvenementService;
 @RestController
 @RequestMapping("evenement")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*")
 public class EvenementController {
     @Autowired
     private EvenementService iEvenementService;
-    @PutMapping("/addAndAssign/{idUser}/{idEvenement}")
+    @PostMapping("/addAndAssign/{idUser}/{idEvenement}")
     public Reservation addAndAssign( @PathVariable("idUser") Integer idUser , @PathVariable("idEvenement") Long id){
-        return iEvenementService.addReservationAndAssignToEvenement(idUser, id);
+       return iEvenementService.addReservationAndAssignToEvenement(idUser, id);
+
     }
-}
+    }
+

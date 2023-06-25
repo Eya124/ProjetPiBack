@@ -9,6 +9,7 @@ import tn.esprit.projetpiback.repository.ReservationRepository;
 import tn.esprit.projetpiback.services.ReservationService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -16,8 +17,20 @@ public class ReservationImpl implements ReservationService {
     private final ReservationRepository reservationRepository;
     private final EvenementRepository evenementRepository;
     @Override
-    public List<Reservation> getALl() {
-        return reservationRepository.findAllByActif(false);
+    public List<Evenement> getALlbyUserAndDate(Integer idUser) {
+        List<Evenement>    evenements = reservationRepository.findDatesEvenementsByUserId(idUser);
+        // Filtre les réservations inactives pour chaque événement
+        List<Evenement> evenementsFiltres = evenements.stream()
+                .peek(evenement -> {
+                    List<Reservation> reservationsInactives = evenement.getReservations().stream()
+                            .filter(reservation -> !reservation.isActif()&& reservation.getUser().getIdUser().equals(idUser))
+                            .collect(Collectors.toList());
+                    evenement.setReservations(reservationsInactives);
+                })
+                .filter(evenement -> !evenement.getReservations().isEmpty())
+                .collect(Collectors.toList());
+
+        return evenementsFiltres;
     }
 
 
