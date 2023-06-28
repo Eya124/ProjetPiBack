@@ -1,6 +1,7 @@
 package tn.esprit.projetpiback.controller;
 
 import org.springframework.data.repository.query.Param;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.projetpiback.entites.Evenement;
 import tn.esprit.projetpiback.entites.Reservation;
@@ -25,8 +26,14 @@ public class ReservationController {
     public List<Evenement> getAll(@PathVariable("idUser") Integer idUser){
         return iAppService.getALlbyUserAndDate(idUser);
     }
-
-
+    @Scheduled(fixedDelay = 24 * 60 * 60 * 1000)
+    public void deleteEvent(){
+         iAppService.supprimerEvenementsExpires();
+    }
+    @GetMapping("getAllEventsArchive/{idUser}")
+    public List<Evenement> getAllEventsArchive(@PathVariable("idUser") Integer idUser){
+        return iAppService.getAllEventsArchive(idUser);
+    }
     @GetMapping("/nbReservation/{idEvenement}")
     public int nbReservationParUser(@PathVariable Long idEvenement) {
         return iAppService.getNbrReservationActifEvenement(idEvenement, false);
