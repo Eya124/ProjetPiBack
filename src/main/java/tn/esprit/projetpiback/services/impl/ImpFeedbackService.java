@@ -22,7 +22,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ImpFeedbackService implements FeedbackService {
 
-    /*private final FeedbackRepository feedbackRepository;
+    private final FeedbackRepository feedbackRepository;
     private final PostRepository postRepository;
     private final CommentaireRepository commentaireRepository;
 
@@ -44,45 +44,20 @@ public class ImpFeedbackService implements FeedbackService {
     @Scheduled(fixedRate = 30000)
     @Transactional
     @Override
-    public void ProcessComment() {
+    public void processComment() {
 
+        System.out.println("entering feedback section");
         File PostiveWordlist = new File("C:\\Users\\ibrah\\OneDrive\\Desktop\\ESPRIT\\PI\\Positivewordlist.txt");
         File NegativeWordlist = new File("C:\\Users\\ibrah\\OneDrive\\Desktop\\ESPRIT\\PI\\Negativewordlist.txt");
 
         List<String> positiveWords = loadWordList(PostiveWordlist);
         List<String> negativeWords = loadWordList(NegativeWordlist);
 
-    /*
-        List<String> positiveWords = new ArrayList<>();
-        List<String> negativeWords = new ArrayList<>();
-        //loading positive words
-        try (BufferedReader reader = new BufferedReader(new FileReader(PostiveWordlist ))) {
-                String positive;
-                while ((positive = reader.readLine()) != null) {
-                    System.out.println(positive);
-                    positiveWords.add(positive);
-                }
-            } catch (IOException e) {
-                // Handle the exception appropriately (e.g., log an error, throw an exception)
-                e.printStackTrace();
-            }
 
-        //loading negative words
-        try (BufferedReader reader = new BufferedReader(new FileReader(NegativeWordlist))) {
-            String negative;
-            while ((negative = reader.readLine()) != null) {
-                System.out.println(negative);
-                negativeWords.add(negative);
-            }
-        } catch (IOException e) {
-            // Handle the exception appropriately (e.g., log an error, throw an exception)
-            e.printStackTrace();
-        }
-*/
         //traitement de commentaire
 
         //it works but i should affect every comment to 1 feedback id
-        /*List<Post> allPosts = postRepository.findAll();
+        List<Post> allPosts = postRepository.findAll();
         List<Commentaire> allComments = new ArrayList<>();
         for (Post p:allPosts) {
             for (Commentaire com: p.getCommentaires()) {
@@ -114,6 +89,7 @@ public class ImpFeedbackService implements FeedbackService {
             if (fd == null) {
                 // Create and set the feedback entity
                 Feedback feedback = new Feedback();
+                feedback.setFeedbackNumber(feedbackNumber);
                 comment.setFeedback(feedback);
                 feedback.setCommentairefd(comment);
                 feedbackRepository.saveAndFlush(feedback);
@@ -127,11 +103,47 @@ public class ImpFeedbackService implements FeedbackService {
                 commentaireRepository.saveAndFlush(comment);
 
             }
+        }
+
+        //process post
+        for (Post post :allPosts) {
+            //list that contains feedback number of each post
+            List<Integer> allfeedbacknumbers = new ArrayList<>();
+            // the rating of the post
+            Integer rating = 0;
+            for (Commentaire commentaire: post.getCommentaires()) {
+                // get the feedbacks of comments of each post
+                Feedback feedbackofpost =  feedbackRepository.findByCommentairefdIdCommentaire(commentaire.getIdCommentaire());
+                allfeedbacknumbers.add(feedbackofpost.getFeedbackNumber());
+            }
+            for (Integer i: allfeedbacknumbers) {
+                rating += i;
+            }
+            System.out.println(rating + post.getDescription());
+
+            //check if the post has already a rating
+            Feedback postfd = feedbackRepository.findByPostfdIdPost(post.getIdPost());
+            if (postfd == null){
+                Feedback feedbackpst = new Feedback();
+                feedbackpst.setFeedbackNumber(rating);
+                feedbackpst.setPostfd(post);
+                post.setFeedback(feedbackpst);
+                feedbackRepository.saveAndFlush(feedbackpst);
+                postRepository.saveAndFlush(post);
+            } else {
+                postfd.setPostfd(post);
+                postfd.setFeedbackNumber(rating);
+                post.setFeedback(postfd);
+                feedbackRepository.saveAndFlush(postfd);
+                postRepository.saveAndFlush(post);
+            }
+        }
 
         }
 
 
-        }*/
 
-    }
+}
+
+
 

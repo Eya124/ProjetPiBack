@@ -12,4 +12,6 @@ public interface FeedbackRepository extends JpaRepository<Feedback, Integer> {
 
 Feedback findByCommentairefdIdCommentaire(int id);
 
+Feedback findByPostfdIdPost(int id);
+
 }

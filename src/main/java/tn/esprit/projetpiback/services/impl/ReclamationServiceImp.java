@@ -1,6 +1,7 @@
 package tn.esprit.projetpiback.services.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import tn.esprit.projetpiback.entites.Evenement;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Calendar;
 
 
 @Service
@@ -80,10 +82,44 @@ public class ReclamationServiceImp implements ReclamationService {
     }
 
     @Override
+    @Transactional
+    public void updateRecStatus(int recid, boolean recstatus) {
+        Reclamation reclamation = reclamationRepository.findById(recid).orElse(null);
+
+        reclamation.setStatus(recstatus);
+        reclamation.setDateupdaterec(new Date());
+        reclamationRepository.save(reclamation);
+    }
+
+    @Override
     public List<Reclamation> getAllReclamations() {
         return reclamationRepository.findAll();
     }
+
+
+    // supprimer les reclamations qui sont traités dépuis 3 jours
+    // toutes les 1min 25 secondes pour alléger le travail de serveur
+    @Scheduled(fixedDelay = 85000)
+    @Transactional
+    @Override
+    public void supprimerRec() {
+
+        //Calculate the thresholdDate (which is before 3 days from today)
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_MONTH, -3);
+        Date thresholdDate = calendar.getTime();
+        System.out.println(thresholdDate);
+        //get the recs
+        List<Reclamation> recs = reclamationRepository.findAllByStatusIsTrueAndDateupdaterecBefore(thresholdDate);
+        for(Reclamation reclamationtraite : recs){
+            reclamationRepository.delete(reclamationtraite);
+            System.out.println(reclamationtraite.getIdReclamation() +" got deleted");
+        }
+    }
     //ban user function in userservice
+
+
+
 
     //zid get by id
 

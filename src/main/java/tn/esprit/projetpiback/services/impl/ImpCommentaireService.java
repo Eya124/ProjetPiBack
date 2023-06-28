@@ -19,6 +19,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -64,7 +65,9 @@ public class ImpCommentaireService implements CommentaireService {
     @Scheduled(fixedRate = 30000)
     @Transactional
     public void filterCommentaire() {
-        File badlist = new File("C:\\Users\\Firas\\Desktop\\bad.txt");
+
+        URL fileUrlbadlist = getClass().getResource("src/main/java/tn.esprit.projectpiback/lists/bad.txt");
+        File badlist = new File(fileUrlbadlist.getFile());
         List<String> badWords = loadWordList(badlist);
         List<Commentaire> allComments = commentaireRepository.findAll();
 
@@ -86,4 +89,6 @@ public class ImpCommentaireService implements CommentaireService {
         List<Commentaire> allComments = post.getCommentaires();
         return allComments;
     }
+
+
 }
