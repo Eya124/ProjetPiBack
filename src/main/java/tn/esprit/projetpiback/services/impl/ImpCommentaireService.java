@@ -66,8 +66,9 @@ public class ImpCommentaireService implements CommentaireService {
     @Transactional
     public void filterCommentaire() {
 
-        URL fileUrlbadlist = getClass().getResource("src/main/java/tn.esprit.projectpiback/lists/bad.txt");
-        File badlist = new File(fileUrlbadlist.getFile());
+        File badlist = new File("C:\\Users\\Firas\\Desktop\\bad.txt");
+    //   URL fileUrlbadlist = getClass().getResource("src/main/java/tn.esprit.projectpiback/lists/bad.txt");
+    //   File badlist = new File(fileUrlbadlist.getFile());
         List<String> badWords = loadWordList(badlist);
         List<Commentaire> allComments = commentaireRepository.findAll();
 
