@@ -66,6 +66,7 @@ public class User {
     private List<Role> roles = new ArrayList<>();
 
     @OneToMany(mappedBy = "usercommentaire")
+    @JsonIgnore
     private List<Commentaire> commentaires;
     public User(String password, String username, List<Role> roles) {
         this.password = password;
