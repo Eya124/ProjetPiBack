@@ -25,6 +25,7 @@ import tn.esprit.projetpiback.security.JWTGenerator;
 import tn.esprit.projetpiback.services.EmailService;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.util.*;
 
 @RestController
@@ -116,6 +117,8 @@ public class AuthController {
                 new UsernamePasswordAuthenticationToken(
                 loginDto.getUsername(),
                 loginDto.getPassword()));
+        User user2 =userRepository.findUserByUsername(loginDto.getUsername());
+        user2.setLastLog(LocalDate.now());
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String token = jwtGenerator.generateToken(authentication);
         return new ResponseEntity<>(new AuthResponseDTO(token), HttpStatus.OK);
@@ -137,6 +140,7 @@ public class AuthController {
         user.setPrenom(registerDto.getPrenom());
         user.setAdresse(registerDto.getAdresse());
         Role roles = roleRepository.findByName(registerDto.getRoleName());
+        user.setFirstlog(LocalDate.now());
         user.setRoles(Collections.singletonList(roles));
 
         userRepository.save(user);

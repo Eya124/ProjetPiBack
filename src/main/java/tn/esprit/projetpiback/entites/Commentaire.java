@@ -26,16 +26,16 @@ public class Commentaire {
     private LocalDate createdAt;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "post")
-   // @JsonBackReference
+    //@JoinColumn(name = "post")
+    //@JsonBackReference
     @JsonIgnore
     private Post post;
-    @ManyToOne
-    // @JsonBackReference
-    private Commentaire parentComment;
-    @OneToMany(mappedBy = "parentComment", cascade = CascadeType.ALL)
-    @JsonManagedReference
-    private List<Commentaire> replies;
+//    @ManyToOne
+//    @JsonBackReference
+//    private Commentaire parentComment;
+//    @OneToMany(mappedBy = "parentComment", cascade = CascadeType.ALL)
+//    @JsonManagedReference
+//    private List<Commentaire> replies;
     private Boolean archive;
 
     @ManyToOne
