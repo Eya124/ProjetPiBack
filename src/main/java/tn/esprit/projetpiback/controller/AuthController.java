@@ -16,7 +16,7 @@ import tn.esprit.projetpiback.dto.RegisterDto;
 import tn.esprit.projetpiback.entites.ResetPasswordToken;
 import tn.esprit.projetpiback.entites.Role;
 import tn.esprit.projetpiback.entites.User;
-import tn.esprit.projetpiback.exceptions.InvalidTokenException;
+import tn.esprit.projetpiback.Exceptions.InvalidTokenException;
 import tn.esprit.projetpiback.repository.ResetPasswordTokenRepository;
 import tn.esprit.projetpiback.repository.RoleRepository;
 import tn.esprit.projetpiback.repository.UsersRepository;

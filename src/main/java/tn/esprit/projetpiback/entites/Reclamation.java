@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -22,12 +24,13 @@ public class Reclamation {
     private String description;
 
     private Date daterec;
-    private Boolean Status;
-    private Boolean archive;
+
+    private Date dateupdaterec;
+    private Boolean status;
 
 
 
-    @JsonIgnore
+
     @OneToOne
     private User userarec;
 

@@ -11,5 +11,8 @@ public interface ReclamationService {
 
     void ajouterReclamation(int iduserrec1,int iduserarec2,Reclamation rec);
 
+    void updateRecStatus(int recid,boolean recstatus);
     List<Reclamation> getAllReclamations();
+
+    void supprimerRec();
 }
