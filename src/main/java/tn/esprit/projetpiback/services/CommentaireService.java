@@ -7,7 +7,10 @@ import java.util.List;
 
 public interface CommentaireService {
     void ajouterCommentaire (Commentaire c, Integer idUser, Integer idPost);
-    void filterCommentaire ();
+    void filterCommentaire (int idCommentaire);
     List<Commentaire> getComentairePost(int idPost);
+
+    //List<Commentaire> getAllNotArchivedComments();
+    void deleteCommentaire(Integer id);
 
 }

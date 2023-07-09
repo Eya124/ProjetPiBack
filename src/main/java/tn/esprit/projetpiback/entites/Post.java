@@ -31,7 +31,6 @@ public class Post {
     private LocalDate date;
     private int nbrParticipant;
     private String typeLogement;
-    private String nbrLikes;
    // private int nbr_signalement;
 
     private Boolean archive;
@@ -40,6 +39,12 @@ public class Post {
 
     @ManyToOne
     private User userpost;
+
+    @ManyToMany
+    private List<User> listuserslike;
+
+    private int nbrLike;
+    private boolean liked;
 
     @OneToOne
     Feedback feedback;

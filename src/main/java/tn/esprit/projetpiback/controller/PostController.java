@@ -46,6 +46,10 @@ public class PostController {
         postService.updatePost(post);
 
     }
+    @GetMapping("/like/{idPost}/{idUser}")
+    private Post likePost(@PathVariable Integer idPost, @PathVariable Integer idUser){
+        return postService.likePost(idPost,idUser);
+    }
     // Autre constructeur existant qui ne prend pas de paramètre
     /*public PostController() {
         // Code du constructeur sans paramètre

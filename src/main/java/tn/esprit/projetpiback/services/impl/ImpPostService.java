@@ -2,6 +2,7 @@ package tn.esprit.projetpiback.services.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 import org.springframework.validation.annotation.Validated;
 import org.webjars.NotFoundException;
 import tn.esprit.projetpiback.entites.*;
@@ -80,6 +81,37 @@ public class ImpPostService implements PostService {
             // Gérer le cas où le post n'est pas trouvé
             throw new NotFoundException("Post not found");
         }
+    }
+    public boolean checkLiked(Integer idPost, Integer idUser){
+        Post post = postRepository.findById(idPost).orElse(null);
+        User user = usersRepository.findById(idUser).orElse(null);
+        Assert.notNull(post, "Entity must not be null.");
+        Assert.notNull(user, "Entity must not be null.");
+        Boolean u = post.getListuserslike().contains(user);
+        System.out.println(u);
+        return u;
+    }
+    @Override
+    @Transactional
+    public Post likePost(Integer idPost, Integer idUser) {
+        Post post = postRepository.findById(idPost).orElse(null);
+        User user = usersRepository.findById(idUser).orElse(null);
+        Assert.notNull(post, "Entity must not be null.");
+        Assert.notNull(user, "Entity must not be null.");
+        if (checkLiked(idPost,idUser)) {
+            post.getListuserslike().remove(user);
+            int likes = post.getNbrLike();
+            likes--;
+            post.setLiked(false);
+            post.setNbrLike(likes);
+        }else {
+            post.getListuserslike().add(user);
+            int likes = post.getNbrLike();
+            likes++;
+            post.setLiked(true);
+            post.setNbrLike(likes);
+        }
+        return post;
     }
 
 //    @Override

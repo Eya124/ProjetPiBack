@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.projetpiback.entites.Commentaire;
+import tn.esprit.projetpiback.entites.Post;
 import tn.esprit.projetpiback.services.CommentaireService;
 import tn.esprit.projetpiback.services.PostService;
 
@@ -24,4 +25,15 @@ public class CommentaireController {
     public List<Commentaire> getComentairePost(@PathVariable int idPost){
         return commentaireService.getComentairePost(idPost);
     }
+
+
+    @DeleteMapping("/deleteCommentaire/{id}")
+    private void deleteCommentaire(@PathVariable int id) {
+        commentaireService.deleteCommentaire(id);
+    }
+//    @GetMapping("/NotarchivedCommentaire")
+//    private List<Commentaire> getAllNotArchivedComments(){
+//
+//        return commentaireService.getAllNotArchivedComments();
+//    }
 }

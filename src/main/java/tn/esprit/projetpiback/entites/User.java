@@ -44,6 +44,10 @@ public class User {
     @OneToMany(mappedBy = "userpost")
     private List<Post> posts;
 
+    @ManyToMany(mappedBy = "listuserslike")
+    @JsonIgnore
+    private List<Post> listpostlike;
+
     @JsonIgnore
     @OneToMany(mappedBy = "userrec")
     private List<Reclamation> reclamations;

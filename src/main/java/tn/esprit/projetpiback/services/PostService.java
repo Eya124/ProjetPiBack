@@ -14,5 +14,5 @@ public interface PostService {
     void deletePost(Integer id);
     //void addCommentToPost(Integer idPost,Integer idUser, Commentaire commentaire);
     //void addReplyToComment(Integer idCommentaire, Commentaire reply);
-    //void likePost(Integer postId);
+    Post likePost(Integer idPost, Integer idUser);
 }

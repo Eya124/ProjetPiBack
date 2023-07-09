@@ -5,6 +5,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.validation.annotation.Validated;
+import org.webjars.NotFoundException;
 import tn.esprit.projetpiback.entites.Commentaire;
 import tn.esprit.projetpiback.entites.Post;
 import tn.esprit.projetpiback.entites.User;
@@ -57,39 +58,57 @@ public class ImpCommentaireService implements CommentaireService {
         Assert.notNull(post, "Entity must not be null.");
         Assert.notNull(user, "Entity must not be null.");
         commentaireRepository.saveAndFlush(c);
+        filterCommentaire(c.getIdCommentaire());
         c.setPost(post);
         c.setUsercommentaire(user);
     }
 
     @Override
-    @Scheduled(fixedRate = 30000)
     @Transactional
-    public void filterCommentaire() {
+    public void filterCommentaire(int idCommentaire) {
 
         File badlist = new File("C:\\Users\\Firas\\Desktop\\bad.txt");
     //   URL fileUrlbadlist = getClass().getResource("src/main/java/tn.esprit.projectpiback/lists/bad.txt");
     //   File badlist = new File(fileUrlbadlist.getFile());
         List<String> badWords = loadWordList(badlist);
-        List<Commentaire> allComments = commentaireRepository.findAll();
+        //List<Commentaire> allComments = commentaireRepository.findAll();
+        Commentaire commentaire = commentaireRepository.findById(idCommentaire).orElse(null);
 
-        for (Commentaire commentaire : allComments) {
+        //for (Commentaire commentaire : allComments) {
             System.out.println(commentaire.getContent());
             String filteredText = commentaire.getContent();
             for (String word : badWords) {
                 filteredText = filteredText.replaceAll("(?i)\\b" + word + "\\b", "*****");
             }
             commentaire.setContent(filteredText);
-        }
-        commentaireRepository.saveAll(allComments);
+       // }
+        commentaireRepository.save(commentaire);
     }
 
     @Override
     public List<Commentaire> getComentairePost(int idPost) {
         Post post = postRepository.findById(idPost).orElse(null);
         Assert.notNull(post, "Entity must not be null.");
-        List<Commentaire> allComments = post.getCommentaires();
+        List<Commentaire> allComments = commentaireRepository.getCommentaireByPostNotArchive(idPost);
+
         return allComments;
     }
+
+    @Override
+    public void deleteCommentaire(Integer id) {
+        Commentaire commentaire = commentaireRepository.findById(id).orElse(null);
+        if (commentaire != null) {
+            commentaire.setArchive(true); // Mettre à jour le statut du post en "archivé"
+            commentaireRepository.save(commentaire); // Enregistrer les modifications dans la base de données
+        } else {
+            // Gérer le cas où le post n'est pas trouvé
+            throw new NotFoundException("Post not found");
+        }
+    }
+//    public List<Commentaire> getAllNotArchivedComments() {
+//        return commentaireRepository.getCommentaireByPostNotArchive(idPost);
+//    }
+
 
 
 }
