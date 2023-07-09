@@ -10,6 +10,7 @@ import tn.esprit.projetpiback.services.ReclamationService;
 import java.util.List;
 
 
+@CrossOrigin
 @RestController
 @RequestMapping("reclamation")
 @RequiredArgsConstructor
@@ -26,4 +27,8 @@ public class ReclamationController {
         return reclamationService.getAllReclamations();
     }
 
+    @GetMapping("/setStatus/{recid}/{recstatus}")
+    public void updateRecStatus(@PathVariable int recid,@PathVariable boolean recstatus) {
+        reclamationService.updateRecStatus(recid,recstatus);
+    }
 }

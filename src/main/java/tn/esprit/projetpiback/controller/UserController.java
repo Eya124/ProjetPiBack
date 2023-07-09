@@ -43,5 +43,10 @@ public class UserController {
     public List<User> getAll(){
         return userService.getAll();
     };
+    @CrossOrigin
+    @GetMapping("/user/{id}")
+    public User getUser(@PathVariable Integer id) {
+        return userService.getUser(id);
+    }
 
 }

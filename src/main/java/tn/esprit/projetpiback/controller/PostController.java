@@ -65,6 +65,11 @@ public class PostController {
 //        return ResponseEntity.ok("Publication créée avec succès");
 //    }
 
+    /*@PostMapping("/{postId}/comments")
+    public String addCommentToPost(@PathVariable Integer postId,@PathVariable Integer idUser, @RequestBody Commentaire commentaire) {
+        postService.addCommentToPost(postId,idUser, commentaire);
+        return "Commentaire ajouté avec succès";
+    }*/
 //    @PostMapping("/{postId}/comments")
 //    public String addCommentToPost(@PathVariable Integer postId,@PathVariable Integer idUser, @RequestBody Commentaire commentaire) {
 //        postService.addCommentToPost(postId,idUser, commentaire);
