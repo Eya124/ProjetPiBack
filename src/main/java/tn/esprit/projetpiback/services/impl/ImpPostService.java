@@ -52,6 +52,7 @@ public class ImpPostService implements PostService {
 
     @Override
     public void updatePost(Post p) {
+        p.setArchive(false);
         postRepository.save(p);
 
     }
