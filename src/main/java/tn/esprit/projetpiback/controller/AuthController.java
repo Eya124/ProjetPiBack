@@ -1,7 +1,11 @@
 package tn.esprit.projetpiback.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -68,6 +72,22 @@ public class AuthController {
 
         return new ResponseEntity<>("Password reset email sent", HttpStatus.OK);
     }
+    @CrossOrigin
+    @Transactional
+    @PostMapping("admin")
+    public User addAdminRoleByEmail(@RequestParam  String email) {
+        User user = userRepository.findUserByUsername(email);
+        Role adminRole = roleRepository.findByName("ADMIN");
+        if (user != null && adminRole != null) {
+            List<Role> roles = user.getRoles();
+            if (!roles.contains(adminRole)) {
+                roles.add(adminRole);
+                user.setRoles(roles);
+                return userRepository.save(user);
+            }
+        }
+        return null;
+    }
 @CrossOrigin
     @GetMapping("reset-password/{token}")
     public ResponseEntity<String> validateResetPasswordToken(@PathVariable String token) {
@@ -125,28 +145,41 @@ public class AuthController {
     }
 @CrossOrigin
     @PostMapping("register")
-    public ResponseEntity<String> register(@RequestBody RegisterDto registerDto) {
-        if (userRepository.existsByUsername(registerDto.getUsername())) {
-            return new ResponseEntity<>("Username is taken!", HttpStatus.BAD_REQUEST);
-        }
-
-        User user = new User();
-        user.setUsername(registerDto.getUsername());
-        user.setPassword(passwordEncoder.encode((registerDto.getPassword())));
-        user.setAge(registerDto.getAge());
-        user.setPrenomPere(registerDto.getPrenomPere());
-        user.setTelephone(registerDto.getTelephone());
-        user.setNom(registerDto.getNom());
-        user.setPrenom(registerDto.getPrenom());
-        user.setAdresse(registerDto.getAdresse());
-        Role roles = roleRepository.findByName(registerDto.getRoleName());
-        user.setFirstlog(LocalDate.now());
-        user.setRoles(Collections.singletonList(roles));
-
-        userRepository.save(user);
-
-        return new ResponseEntity<>("User registered success!", HttpStatus.OK);
+public ResponseEntity<String> register(@RequestBody RegisterDto registerDto) {
+    if (userRepository.existsByUsername(registerDto.getUsername())) {
+        return ResponseEntity.badRequest().body("Username is taken!");
     }
+
+    // Create user object...
+    User user = new User();
+    user.setUsername(registerDto.getUsername());
+    user.setPassword(passwordEncoder.encode((registerDto.getPassword())));
+    user.setAge(registerDto.getAge());
+    user.setPrenomPere(registerDto.getPrenomPere());
+    user.setTelephone(registerDto.getTelephone());
+    user.setNom(registerDto.getNom());
+    user.setPrenom(registerDto.getPrenom());
+    user.setAdresse(registerDto.getAdresse());
+    Role roles = roleRepository.findByName(registerDto.getRoleName());
+    user.setFirstlog(LocalDate.now());
+    user.setRoles(Collections.singletonList(roles));
+
+
+    userRepository.save(user);
+
+    // Create response object...
+    Map<String, String> responseMap = new HashMap<>();
+    responseMap.put("message", "User registered successfully!");
+    String responseBody = null;
+    try {
+        responseBody = new ObjectMapper().writeValueAsString(responseMap);
+    } catch (JsonProcessingException e) {
+        e.printStackTrace();
+    }
+    HttpHeaders responseHeaders = new HttpHeaders();
+    responseHeaders.setContentType(MediaType.APPLICATION_JSON);
+    return new ResponseEntity<>(responseBody, responseHeaders, HttpStatus.OK);
+}
 
 
 

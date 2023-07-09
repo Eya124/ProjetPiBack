@@ -18,5 +18,6 @@ public interface UserService {
     public Map<String, Long> getUsersCount();
 
     void banUser();
+    public User getUser(Integer id);
 
 }

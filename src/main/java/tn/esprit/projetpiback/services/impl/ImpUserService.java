@@ -160,5 +160,10 @@ public class ImpUserService implements UserService {
         usersRepository.saveAll(usersToArchive);
     }
 
+    @Override
+    public User getUser(Integer id) {
+        return usersRepository.findById(id).orElse(null);
+    }
+
 
 }
