@@ -77,7 +77,7 @@ public class ImpPostService implements PostService {
         if (post != null) {
             post.setArchive(true); // Mettre à jour le statut du post en "archivé"
             postRepository.save(post); // Enregistrer les modifications dans la base de données
-        } else {
+        } else {    
             // Gérer le cas où le post n'est pas trouvé
             throw new NotFoundException("Post not found");
         }
