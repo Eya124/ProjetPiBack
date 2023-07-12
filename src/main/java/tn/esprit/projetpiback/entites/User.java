@@ -19,6 +19,7 @@ import java.util.List;
 
 @AllArgsConstructor
 public class User {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idUser;
@@ -55,6 +56,10 @@ public class User {
 
     @OneToMany(mappedBy = "usereve")
     private List<Evenement> evenements;
+
+
+    @OneToMany(mappedBy = "user")
+    private List<Product> products;
 
 
    @OneToMany

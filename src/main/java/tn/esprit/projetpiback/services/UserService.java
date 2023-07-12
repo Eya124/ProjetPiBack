@@ -16,7 +16,6 @@ public interface UserService {
     public Integer getDifferenceNewWeekLastWeek();
     public List<User> getAll();
     public Map<String, Long> getUsersCount();
-
     void banUser();
     public User getUser(Integer id);
 

@@ -4,6 +4,8 @@ import java.util.Date;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.*;
 
 @Entity
@@ -26,4 +28,9 @@ public class Product {
 
     @Column(columnDefinition = "MEDIUMTEXT")
     private String image;
+
+
+    @ManyToOne
+    @JsonIgnore
+    private User user;
 }
