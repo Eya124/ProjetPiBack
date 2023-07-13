@@ -41,7 +41,7 @@ public class ImpFeedbackService implements FeedbackService {
 
         return wordList;
     }
-    @Scheduled(fixedRate = 30000)
+    /* @Scheduled(fixedRate = 30000)
     @Transactional
     @Override
     public void processComment() {
@@ -139,7 +139,7 @@ public class ImpFeedbackService implements FeedbackService {
             }
         }
 
-    }
+    }*/
 
 
 

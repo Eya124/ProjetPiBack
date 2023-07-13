@@ -28,4 +28,7 @@ public class Evenement {
     private User usereve;
     @ManyToMany
     private List<Reservation> reservations;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private  Centre centre;
 }
